@@ -3,24 +3,27 @@ import express from 'express';
 const app = express(); // app is an instance of Express application
 const port = 3000;
 
-// Import Fetch to make API calls
+// Import Fetch to make API calls from server-side
 import fetch from 'node-fetch';
 
-// Import dotenv to hide API key
-import 'dotenv/config';
-// api key will be process.env.API_KEY
+// Import dotenv to hide API key (process.env.API_KEY)
+import 'dotenv/config'; 
 
+// Start server to listen 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
 
+// Serve public directory 
+app.use(express.static("public"));
 
+// Set up one endpoint
 app.get('/get_user_data', async (req, res) => {
-    const user_api_url = `https://osu.ppy.sh/api/get_user?k=${process.env.API_KEY}&u=mrekk`;
-    const user_fetch_response = await fetch(user_api_url);
-    const user_data = await user_fetch_response.json();
-    console.log(user_data);
-    res.json(user_data);
+    const api_url = `https://osu.ppy.sh/api/get_user?k=${process.env.API_KEY}&u=mrekk`;
+    const fetch_response = await fetch(api_url);
+    const data = await fetch_response.json();
+    console.log(data);
+    res.json(data);
 });
 
 
