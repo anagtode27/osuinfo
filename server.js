@@ -18,8 +18,9 @@ app.listen(port, () => {
 app.use(express.static("public"));
 
 // Set up one endpoint
-app.get('/get_user_data', async (req, res) => {
-    const api_url = `https://osu.ppy.sh/api/get_user?k=${process.env.API_KEY}&u=mrekk`;
+app.get('/get_user_data/:user', async (req, res) => {
+    console.log(req.params.user);
+    const api_url = `https://osu.ppy.sh/api/get_user?k=${process.env.API_KEY}&u=${req.params.user}`;
     const fetch_response = await fetch(api_url);
     const data = await fetch_response.json();
     console.log(data);
