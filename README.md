@@ -19,5 +19,8 @@ Current task:
     -Make the getUserData function send out all 3 api calls for the User stats, while combining each call's data into a consolidated object
 
 
+Todo:
+    -Add try catch for all api calls. In the catch block, set up dummy text/imgs like in prev. project
+
 
 

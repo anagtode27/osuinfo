@@ -11,7 +11,7 @@ import 'dotenv/config';
 
 // Start server to listen on port
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
+    console.log(`The server is now listening on port ${port}`);
 });
 
 // Serve public directory to client
@@ -27,4 +27,15 @@ app.get('/get_user_data/:user', async (req, res) => {
     res.json(data);
 });
 
+// Set up THE IMAGE ENDPOINT HERE
+app.get('/get_user_pfp/:uid', async (req, res) => {
+    //console.log(req.params.user);
+    const api_url = `https://s.ppy.sh/a/${req.params.uid}`;
+    //console.log(api_url);
+    const fetch_response = await fetch(api_url);
+    const data_buffer = await fetch_response.arrayBuffer();
+    const data_b64 = Buffer.from(data_buffer).toString('base64');
+    //console.log(data_b64);
+    res.send(data_b64);
+});
 
