@@ -42,4 +42,29 @@ app.get('/get_user_recent/:user', async (req, res) => {
     res.json(data);
 });
 
+// Beatmap endpoint
+app.get('/get_beatmaps/:id', async (req, res) => {
+    const api_url = `https://osu.ppy.sh/api/get_beatmaps?k=${process.env.API_KEY}&b=${req.params.id}`;
+    const fetch_response = await fetch(api_url);
+    const data = await fetch_response.json();
+    res.json(data);
+});
+
+// Beatmap cover endpoint
+app.get('/get_cover_img/:id', async (req, res) => {
+    const api_url = `https://assets.ppy.sh/beatmaps/${req.params.id}/covers/cover.jpg`;
+    const fetch_response = await fetch(api_url);
+    const data_buffer = await fetch_response.arrayBuffer();
+    const data_b64 = Buffer.from(data_buffer).toString('base64');
+    res.send(data_b64);
+});
+
+// Beatmap thumbnail endpoint
+app.get('/get_thumbnail_img/:id', async (req, res) => {
+    const api_url = `https://b.ppy.sh/thumb/${req.params.id}l.jpg`;
+    const fetch_response = await fetch(api_url);
+    const data_buffer = await fetch_response.arrayBuffer();
+    const data_b64 = Buffer.from(data_buffer).toString('base64');
+    res.send(data_b64);
+});
 
