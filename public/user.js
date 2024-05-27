@@ -35,16 +35,18 @@ const getUserData = async () => {
     //console.log(consolidated_data);
 
     card = document.getElementById("card");
+
     populateInfo(consolidated_data, card);
 };
 
 const populateInfo = (data, card) => {
+    // card.innerHTML = "";
 
     // Doing this directly in the src giving some issues
     const imgSource = 'data:image/jpeg;base64,' + data[1];
     
     card.innerHTML = `
-        <div id="user-card">
+        <div class="cardcontainer">
             <img id="pfp_img" src="${imgSource}" alt="Profile Picture">
             <h2 id="user_name">${data[0][0].username}</h2>
             <p id="country_origin">${data[0][0].country}</p>
@@ -56,11 +58,10 @@ const populateInfo = (data, card) => {
             <p id="time_played">Time Played: ${data[0][0].total_seconds_played}</p>
             <p id="accuracy">Accuracy: ${data[0][0].accuracy}</p>
             <p id="level">Level: ${data[0][0].level}</p>
-            <div id="chart-container">
-                <canvas id="myChart"></canvas>
-            </div>
         </div>
     `;
+
+    /* 
     const ctx = document.getElementById('myChart');
 
     if (myChart) {
@@ -95,6 +96,7 @@ const populateInfo = (data, card) => {
         }
       }
     })
+    */
 }
 
 
