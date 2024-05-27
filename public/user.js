@@ -51,16 +51,22 @@ const populateInfo = (data) => {
       data: {
         labels: ['SS (H)', 'SS', 'S (H)', 'S', 'A'],
         datasets: [{
-          label: 'Rank Distribution',
+          label: '',
           data: [data[0][0].count_rank_ssh, data[0][0].count_rank_ss, data[0][0].count_rank_sh, data[0][0].count_rank_s, data[0][0].count_rank_a],
           borderWidth: 1
         }]
       },
       options: {
         scales: {
-          y: {
-            beginAtZero: true
-          }
+            y: [{
+                display: false
+            }]
+        },
+        plugins: {
+            title: {
+                display: true,
+                text: "Rank Distribution"
+            }
         }
       }
     })
