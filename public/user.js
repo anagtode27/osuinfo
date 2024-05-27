@@ -38,7 +38,7 @@ const getUserData = async () => {
 };
 
 const populateInfo = (data) => {
-    
+     
     const ctx = document.getElementById('myChart');
 
     if (myChart) {
