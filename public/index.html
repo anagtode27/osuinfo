@@ -4,31 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="#">
-    <title>Document</title>
+    <title>osu!Info</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet"/>
 </head>
 <body>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <h1>Get Information About A User</h1>
+  <header>
+    <div class="query-header">
+        <h1>osu!Info</h1>
+    </div>
 
-    <form>
-        <input type="text" id="user-form">
-    </form> 
+    <div class="query-nav">
+        <p>I'm looking to...</p>
+        <ul class="query-type">
+            <li><a href="compare.html">Compare Two Pokemon</a></li>
+            <li><a href="index.html">Get Info About A Pokemon</a></li>
+        </ul>
+    </div>
+  </header>
 
-    <button type="button" id="btn">Click Me</button>
+  <main class="bigcontainer">
+    <div class="container">
 
-    <img src=""id="pfp_img">
+        <form class="playerForm">
 
+            <label>
+                <input type="text" placeholder="Enter username or ID" class="userInput" id ="userInput"/>
+            </label>
 
-    <a href="beatmap.html">Beatmap</a>
+            <!-- add br to take up space while empty -->
 
-    
-    <div id="chartContainer" style="height:400px; width:600px">
-      <canvas id="myChart"></canvas>
-  </div>
-  
-  
+            <p class="statusText" id="statusText"><br></p>
+
+            <button type="button" class="btn" id="btn">Get info!</button>
+        </form>
+
+        <img src=""id="pfp_img">
+        <a href="beatmap.html">Beatmap</a>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <div id="chartContainer" style="height:400px; width:600px">
+          <canvas id="myChart"></canvas>
+        </div>
+
+        <div class="card" id="card"></div>
+
+    </div>
+  </main>
 
 <script src="user.js"></script>
 </body>

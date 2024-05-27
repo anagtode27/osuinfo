@@ -11,7 +11,7 @@ const getTextInput = (elementId) => {
 
 const getUserData = async () => {
 
-    const user_name = getTextInput("user-form");
+    const user_name = getTextInput("userInput");
 
     // Get general info
     let api_url = `/get_user_data/${user_name}`;
