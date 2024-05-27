@@ -3,7 +3,7 @@ osu!Info
 Site will have:
 
 1) User stats 
-    -/get_user, pfp endpoint, and /get_user_recent
+    -/get_user, pfp endpoint, and /get_user_recent (need to get beatmap endpoint done for the recent scores)
 
 2) Compare two users
     -/get_user, pfp endpoint, and /get_user_best

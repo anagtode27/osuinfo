@@ -17,25 +17,29 @@ app.listen(port, () => {
 // Serve public directory to client
 app.use(express.static("public"));
 
-// Set up one endpoint
+// User data endpoint
 app.get('/get_user_data/:user', async (req, res) => {
-    //console.log(req.params.user);
     const api_url = `https://osu.ppy.sh/api/get_user?k=${process.env.API_KEY}&u=${req.params.user}`;
     const fetch_response = await fetch(api_url);
     const data = await fetch_response.json();
-    //console.log(data);
     res.json(data);
 });
 
-// Set up THE IMAGE ENDPOINT HERE
+// Profile picture endpoint
 app.get('/get_user_pfp/:uid', async (req, res) => {
-    //console.log(req.params.user);
     const api_url = `https://s.ppy.sh/a/${req.params.uid}`;
-    //console.log(api_url);
     const fetch_response = await fetch(api_url);
     const data_buffer = await fetch_response.arrayBuffer();
     const data_b64 = Buffer.from(data_buffer).toString('base64');
-    //console.log(data_b64);
     res.send(data_b64);
 });
+
+// Recent scores endpoint
+app.get('/get_user_recent/:user', async (req, res) => {
+    const api_url = `https://osu.ppy.sh/api/get_user_recent?k=${process.env.API_KEY}&u=${req.params.user}`;
+    const fetch_response = await fetch(api_url);
+    const data = await fetch_response.json();
+    res.json(data);
+});
+
 
