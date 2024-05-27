@@ -15,8 +15,10 @@ Site will have:
     -/get_match
 
 
-Current task:
-    -Make the getUserData function send out all 3 api calls for the User stats, while combining each call's data into a consolidated object
+Task list:
+    1) Style user info, then beatmap info, then add beatmap functionality to user
+    2) Tackle user comparison and multiplayer info
+    3) Add try catch on all fetch calls 
 
 
 Todo:
