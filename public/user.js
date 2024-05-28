@@ -3,11 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
     button.addEventListener("click", () => getUserData());  
 });
 
-//document.addEventListener('DOMContentLoaded', () => {
-//    addEventListenerIfElementExists("btn1", "click", () => getUserData());
-//    // addEventListenerIfElementExists("btn2", "click", () => stuffHere());
-//});
-
 const getTextInput = (elementId) => {
     return document.getElementById(elementId).value.trim();
 };
@@ -26,7 +21,6 @@ const getCountryName = (countryCode) => {
 }
 
 const getUserData = async () => {
-
     const user_name = getTextInput("userInput");
 
     // Get general info
@@ -39,17 +33,15 @@ const getUserData = async () => {
     api_url = `/get_user_pfp/${data_user[0].user_id}`;
     fetch_response = await fetch(api_url);
     const img_b64 = await fetch_response.text();
-    //document.getElementById("pfp_img").src = 'data:image/jpeg;base64,' + img_b64; // move this to populate function
 
     // Get recent scores
     api_url = `/get_user_recent/${user_name}`;
     fetch_response = await fetch(api_url);
     const data_recent_scores = await fetch_response.json();
-    //console.log(data_recent_scores);
 
+    // Combine data into a single array, pass to populate function
     const consolidated_data = [data_user, img_b64, data_recent_scores];
-    // console.log(consolidated_data);
-
+    console.log(consolidated_data[0]);
     populateInfo(consolidated_data);
 };
 
@@ -69,8 +61,8 @@ const populateInfo = (data) => {
     // Splits date into <date>, <time> array and using date section in html
     const joinDateInfo = data[0][0].join_date.split(" ");
 
-    // FOLLOWING LINES BUILD THE FOLLOWING FRAMEWORK IN THE DOM
-    /*
+    /* ########################################################
+    FOLLOWING LINES BUILD THE FOLLOWING FRAMEWORK IN THE DOM
     <div class="cardcontainer">
         <div class="container1">
             <img src="src" alt="pfp">
@@ -97,7 +89,7 @@ const populateInfo = (data) => {
             <p>Level: 95</p>
         </div>
     </div>
-    */
+    ######################################################## */ 
 
     // Create the main container
     const cardContainer = document.createElement('div');
@@ -137,7 +129,7 @@ const populateInfo = (data) => {
     innerContainer1.appendChild(joinDate);
 
     const playCount = document.createElement('p');
-    playCount.textContent = `${numberWithCommas(data[0][0].playcount)} plays`;
+    playCount.textContent = `${numberWithCommas(parseInt(data[0][0].playcount))} plays`;
     innerContainer1.appendChild(playCount);
 
     // Append the inner container to the first container
@@ -161,15 +153,15 @@ const populateInfo = (data) => {
 
     // Create and append elements to the second container
     const globalRanking = document.createElement('p');
-    globalRanking.textContent = `#${numberWithCommas(data[0][0].pp_rank)} Globally`;
+    globalRanking.textContent = `#${numberWithCommas(parseInt(data[0][0].pp_rank))} Globally`;
     container2.appendChild(globalRanking);
 
     const performancePts = document.createElement('p');
-    performancePts.textContent = `${numberWithCommas(Math.round(data[0][0].pp_raw))}pp`;
+    performancePts.textContent = `${numberWithCommas(Math.round(parseInt(data[0][0].pp_raw)))}pp`;
     container2.appendChild(performancePts);
 
     const accuracy = document.createElement('p');
-    accuracy.textContent = `${Math.round(data[0][0].accuracy * 100) / 100}% Acc`;
+    accuracy.textContent = `${Math.round(parseInt(data[0][0].accuracy) * 100) / 100}% Acc`;
     container2.appendChild(accuracy);
 
     // Append the second container to the main container
@@ -181,15 +173,15 @@ const populateInfo = (data) => {
 
     // Create and append elements to the third container
     const countryRanking = document.createElement('p');
-    countryRanking.textContent = `(#${numberWithCommas(data[0][0].pp_country_rank)} in ${data[0][0].country})`;
+    countryRanking.textContent = `(#${numberWithCommas(parseInt(data[0][0].pp_country_rank))} in ${data[0][0].country})`;
     container3.appendChild(countryRanking);
 
     const timePlayed = document.createElement('p');
-    timePlayed.textContent = `${Math.round(Math.round(data[0][0].total_seconds_played / 3600))} Hours`;
+    timePlayed.textContent = `${Math.round(parseInt(data[0][0].total_seconds_played) / 3600)} Hours`;
     container3.appendChild(timePlayed);
 
     const level = document.createElement('p');
-    level.textContent = `Level ${Math.round(data[0][0].level)}`;
+    level.textContent = `Level ${Math.round(parseInt(data[0][0].level))}`;
     container3.appendChild(level);
 
     // Append the third container to the main container
@@ -199,16 +191,21 @@ const populateInfo = (data) => {
     const card = document.getElementById("card");
     card.appendChild(cardContainer);
 
+
     // Following lines configure the chart, using Chart.js
     const ctx = document.getElementById('myChart');
-      
+    
+    const amountOfSS = parseInt(data[0][0].count_rank_ssh) + parseInt(data[0][0].count_rank_ss);
+    const amountOfS = parseInt(data[0][0].count_rank_sh) + parseInt(data[0][0].count_rank_s);
+    const amountOfA = parseInt(data[0][0].count_rank_a);
+
     new Chart(ctx, {
       type: 'pie',
       data: {
-        labels: ['SS (H)', 'SS', 'S (H)', 'S', 'A'],
+        labels: ['SS', 'S', 'A'],
         datasets: [{
           label: '',
-          data: [data[0][0].count_rank_ssh, data[0][0].count_rank_ss, data[0][0].count_rank_sh, data[0][0].count_rank_s, data[0][0].count_rank_a],
+          data: [amountOfSS, amountOfS, amountOfA],
           borderWidth: 1
         }]
       },
@@ -234,7 +231,7 @@ const populateInfo = (data) => {
     })
 };
 
-
+// Dictionary of countries 
 let isoCountries = {
     'AF' : 'Afghanistan',
     'AX' : 'Aland Islands',
