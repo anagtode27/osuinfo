@@ -22,7 +22,6 @@ app.get('/get_user_data/:user', async (req, res) => {
     const api_url = `https://osu.ppy.sh/api/get_user?k=${process.env.API_KEY}&u=${req.params.user}`;
     const fetch_response = await fetch(api_url);
     const data = await fetch_response.json();
-    console.log("hellooo");
     res.json(data);
 });
 

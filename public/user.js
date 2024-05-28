@@ -200,35 +200,38 @@ const populateInfo = (data) => {
     const amountOfA = parseInt(data[0][0].count_rank_a);
 
     new Chart(ctx, {
-      type: 'pie',
-      data: {
-        labels: ['SS', 'S', 'A'],
-        datasets: [{
-          label: '',
-          data: [amountOfSS, amountOfS, amountOfA],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
+        type: 'pie',
+        data: {
+          labels: ['SS', 'S', 'A'],
+          datasets: [{
+            label: '',
+            data: [amountOfSS, amountOfS, amountOfA],
+            backgroundColor: ['#c30b90', '#009daa', '#72c904'], // Set the colors for each slice here
+            borderColor: 'black', // Set the border color for all slices here
+            borderWidth: 0 // Set the border width for all slices here
+          }]
+        },
+        options: {
+          scales: {
             y: {
-                display: false
+              display: false
             },
             x: {
-                display: false
+              display: false
             }
-        },
-        plugins: {
+          },
+          plugins: {
             title: {
-                display: false,
-                text: "Rank Distribution"
+              display: false,
+              text: "Rank Distribution"
             },
             legend: {
-                display: false
+              display: false
             }
+          }
         }
-      }
-    })
+      });
+      
 };
 
 // Dictionary of countries 

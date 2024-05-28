@@ -171,6 +171,7 @@ body {
 	flex-direction: column;
 	gap: 10px;
 }
+
 .container2, .container3 {
 	display: flex;
 	justify-content: space-between;
