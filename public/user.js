@@ -161,7 +161,7 @@ const populateInfo = (data) => {
     container2.appendChild(performancePts);
 
     const accuracy = document.createElement('p');
-    accuracy.textContent = `${Math.round(parseInt(data[0][0].accuracy) * 100) / 100}% Acc`;
+    accuracy.textContent = `${Math.round(parseFloat(data[0][0].accuracy) * 100) / 100}% Acc`;
     container2.appendChild(accuracy);
 
     // Append the second container to the main container
@@ -177,7 +177,7 @@ const populateInfo = (data) => {
     container3.appendChild(countryRanking);
 
     const timePlayed = document.createElement('p');
-    timePlayed.textContent = `${Math.round(parseInt(data[0][0].total_seconds_played) / 3600)} Hours`;
+    timePlayed.textContent = `${Math.round(parseFloat(data[0][0].total_seconds_played) / 3600)} Hours`;
     container3.appendChild(timePlayed);
 
     const level = document.createElement('p');
