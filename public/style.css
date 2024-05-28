@@ -140,16 +140,12 @@ body {
 }
 
 
-body {
-    font-family: Arial, sans-serif;
-}
-
 .cardContainer {
     padding: 5px;
 	display: flex;
 	flex-direction: column;
 	border: 1px solid red;
-	width: 600px;
+	width: 550px;
 	gap: 10px;
 	box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 	transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
@@ -157,9 +153,8 @@ body {
 
 .container1 {
 	display: flex;
-	padding-bottom: 10px;
 	gap: 60px;
-    justify-content: space-around;
+    justify-content: center;
 }
 
 .canvasContainer {
@@ -169,7 +164,9 @@ body {
 .container1 img {
     width: 130px;
     height: 130px;
-    border-radius: 50%;
+    border-radius: 40px;
+    border-style: inset;
+    border-width: 4px;
 }
 
 .innerContainer1 {
@@ -179,21 +176,32 @@ body {
 }
 .container2, .container3 {
 	display: flex;
-	justify-content: space-around;
+	justify-content: space-between;
+    padding-left: 7px;
+    padding-right: 7px;
 }
 
-.cardcontainer:hover {
+.cardContainer:hover {
   background-color: #f0f0f0; /* New background color on hover */
   box-shadow: 0 8px 16px rgba(0,0,0,0.2); /* Enhanced shadow on hover */
   transform: scale(1.05); /* Slightly larger scale on hover */
 }
 
-#user_name {
-  /* Existing styles */
-  transition: color 0.3s ease;
-}
+.cardContainer a {
+    /* text-decoration: underline; */
+    color: black; 
+    transition: color 0.2s ease; 
+  }
+  
+  .cardContainer a:visited { 
+    text-decoration: none;
+    color: black;
+  }
+  
+  .cardContainer a:hover {
+    color: #007bff; 
+    cursor: pointer;
+  }
+  
+  
 
-#user_name:hover {
-  color: #007bff; /* New text color on hover */
-  text-decoration: underline; /* Underline effect on hover */
-}

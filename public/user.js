@@ -75,7 +75,7 @@ const populateInfo = (data) => {
         <div class="container1">
             <img src="src" alt="pfp">
             <div class="innerContainer1">
-                <h2 id="user_name">Souperman</h2>
+                <a href="profile link"><h2 id="user_name">Souperman</h2></a>
                 <p>United States</p>
                 <p>2018-1-30</p>
                 <p>Playcount: 37,000</p>
@@ -118,11 +118,15 @@ const populateInfo = (data) => {
     const innerContainer1 = document.createElement('div');
     innerContainer1.className = 'innerContainer1';
 
-    // Create and append elements to the inner container
     const userName = document.createElement('h2');
     userName.textContent = data[0][0].username;
     userName.id = "user_name";
-    innerContainer1.appendChild(userName);
+
+    // Make the h2 a link
+    const userLink = document.createElement('a');
+    userLink.href = `https://osu.ppy.sh/users/${data[0][0].user_id}`; // Replace with the actual URL
+    userLink.appendChild(userName);
+    innerContainer1.appendChild(userLink);
 
     const countryOrigin = document.createElement('p'); 
     countryOrigin.textContent = getCountryName(data[0][0].country);
@@ -157,7 +161,7 @@ const populateInfo = (data) => {
 
     // Create and append elements to the second container
     const globalRanking = document.createElement('p');
-    globalRanking.textContent = `Ranked #${numberWithCommas(data[0][0].pp_rank)} in the world`;
+    globalRanking.textContent = `#${numberWithCommas(data[0][0].pp_rank)} Globally`;
     container2.appendChild(globalRanking);
 
     const performancePts = document.createElement('p');
@@ -165,7 +169,7 @@ const populateInfo = (data) => {
     container2.appendChild(performancePts);
 
     const accuracy = document.createElement('p');
-    accuracy.textContent = `Accuracy: ${Math.round(data[0][0].accuracy * 100) / 100}%`;
+    accuracy.textContent = `${Math.round(data[0][0].accuracy * 100) / 100}% Acc`;
     container2.appendChild(accuracy);
 
     // Append the second container to the main container
@@ -177,11 +181,11 @@ const populateInfo = (data) => {
 
     // Create and append elements to the third container
     const countryRanking = document.createElement('p');
-    countryRanking.textContent = `Ranked #${numberWithCommas(data[0][0].pp_country_rank)} in ${data[0][0].country}`;
+    countryRanking.textContent = `(#${numberWithCommas(data[0][0].pp_country_rank)} in ${data[0][0].country})`;
     container3.appendChild(countryRanking);
 
     const timePlayed = document.createElement('p');
-    timePlayed.textContent = `${Math.round(Math.round(data[0][0].total_seconds_played / 3600))}hrs played`;
+    timePlayed.textContent = `${Math.round(Math.round(data[0][0].total_seconds_played / 3600))} Hours`;
     container3.appendChild(timePlayed);
 
     const level = document.createElement('p');
@@ -198,7 +202,7 @@ const populateInfo = (data) => {
     // Following lines configure the chart, using Chart.js
     const ctx = document.getElementById('myChart');
       
-    let myChart = new Chart(ctx, {
+    new Chart(ctx, {
       type: 'pie',
       data: {
         labels: ['SS (H)', 'SS', 'S (H)', 'S', 'A'],
