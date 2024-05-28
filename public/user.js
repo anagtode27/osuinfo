@@ -1,5 +1,3 @@
-let myChart;
-
 document.addEventListener('DOMContentLoaded', () => {
     button = document.getElementById("btn");
     button.addEventListener("click", () => getUserData());  
@@ -11,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 //});
 
 const getTextInput = (elementId) => {
-    return document.getElementById(elementId).value;
+    return document.getElementById(elementId).value.trim();
 };
 
 const numberWithCommas = (x) => {
@@ -56,16 +54,55 @@ const getUserData = async () => {
 };
 
 const populateInfo = (data) => {
-    // card.innerHTML = "";
 
+    // Check if cardContainer and canvas exist
+    const potentiallyRemove = document.getElementById("cardContainer");
+    if (potentiallyRemove) {
+        // this also takes care of myChart.destroy(); AND the global declaration of myChart. 
+        // not fully sure how though. should look into this.
+        potentiallyRemove.remove();
+    }
+
+    // Decode img base64 into proper source
     const imgSource = 'data:image/jpeg;base64,' + data[1];
 
     // Splits date into <date>, <time> array and using date section in html
     const joinDateInfo = data[0][0].join_date.split(" ");
 
+    // FOLLOWING LINES BUILD THE FOLLOWING FRAMEWORK IN THE DOM
+    /*
+    <div class="cardcontainer">
+        <div class="container1">
+            <img src="src" alt="pfp">
+            <div class="innerContainer1">
+                <h2 id="user_name">Souperman</h2>
+                <p>United States</p>
+                <p>2018-1-30</p>
+                <p>Playcount: 37,000</p>
+            </div>
+            <div class="canvasContainer">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+
+        <div class="container2">
+            <p>Ranked #35,000 globally</p>
+            <p>Performance Pts: 5,423</p>
+            <p>Accuracy: 95.23%</p>
+        </div>
+
+        <div class="container3">
+            <p>Ranked #Number in the United States</p>
+            <p>500 hours logged</p>
+            <p>Level: 95</p>
+        </div>
+    </div>
+    */
+
     // Create the main container
     const cardContainer = document.createElement('div');
-    cardContainer.className = 'cardcontainer';
+    cardContainer.className = 'cardContainer';
+    cardContainer.id = "cardContainer";
 
     // Create the first inner container
     const container1 = document.createElement('div');
@@ -148,77 +185,20 @@ const populateInfo = (data) => {
     container3.appendChild(timePlayed);
 
     const level = document.createElement('p');
-    level.textContent = `Level: ${Math.round(data[0][0].level * 100) / 100}`;
+    level.textContent = `Level ${Math.round(data[0][0].level)}`;
     container3.appendChild(level);
 
     // Append the third container to the main container
     cardContainer.appendChild(container3);
 
-
-    // 
+    // Append cardContainer to the card element that exists in the DOM already
     const card = document.getElementById("card");
     card.appendChild(cardContainer);
 
-
-    /*
-
-        card.innerHTML = `
-        <div class="cardcontainer">
-            <img id="pfp_img" src="${imgSource}" alt="Profile Picture">
-            <h2 id="user_name">${data[0][0].username}</h2>
-            <p id="country_origin">${data[0][0].country}</p>
-            <p id="join_date">${data[0][0].join_date}</p>
-            <p id="play_count">Playcount: ${data[0][0].playcount}</p>
-            <p id="global_ranking">Global Ranking: ${data[0][0].pp_rank}</p>
-            <p id="country_ranking">Country Ranking: ${data[0][0].pp_country_rank}</p>
-            <p id="performance_pts">Performance Pts: ${data[0][0].pp_raw}</p>
-            <p id="time_played">Time Played: ${data[0][0].total_seconds_played}</p>
-            <p id="accuracy">Accuracy: ${data[0][0].accuracy}</p>
-            <p id="level">Level: ${data[0][0].level}</p>
-        </div>
-    `;
-
-    */
-
-
-    /*card.innerHTML = `
-        <div class="cardcontainer">
-            <div class="container1">
-                <img id="pfp_img" src="${imgSource}" alt="Profile Picture">
-                <div class="innerContainer1">
-                    <h2 id="user_name">Souperman</h2>
-                    <p id="country_origin">United States</p>
-                    <p id="join_date">2018-1-30</p>
-                    <p id="play_count">Playcount: 37,000</p>
-                </div>
-                <div>
-                    <canvas id="myChart"></canvas>
-                </div>
-            </div>
-
-            <div class="container2">
-                <p id="global_ranking">Ranked #35,000 globally</p>
-                <p id="performance_pts">Performance Pts: 5,423</p>
-                <p id="accuracy">Accuracy: 95.23%</p>
-            </div>
-
-            <div class="container3">
-                <p id="country_ranking">Ranked #Number in the United States</p>
-                <p id="time_played">500 hours logged</p>
-                <p id="level">Level: 95</p>
-            </div>
-        </div>
-
-    `;
-    */
+    // Following lines configure the chart, using Chart.js
     const ctx = document.getElementById('myChart');
-
-    if (myChart) {
-        // If it does, destroy it before creating a new one
-        myChart.destroy();
-    }
       
-    myChart = new Chart(ctx, {
+    let myChart = new Chart(ctx, {
       type: 'pie',
       data: {
         labels: ['SS (H)', 'SS', 'S (H)', 'S', 'A'],
@@ -248,7 +228,6 @@ const populateInfo = (data) => {
         }
       }
     })
-
 };
 
 
