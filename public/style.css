@@ -145,10 +145,11 @@ body {
 }
 
 .cardcontainer {
+    padding: 5px;
 	display: flex;
 	flex-direction: column;
 	border: 1px solid red;
-	width: 500px;
+	width: 600px;
 	gap: 10px;
 	box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 	transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
@@ -158,10 +159,17 @@ body {
 	display: flex;
 	padding-bottom: 10px;
 	gap: 60px;
+    justify-content: space-around;
+}
+
+.canvasContainer {
+    width: 130px;
+    height: 130px;
 }
 .container1 img {
-    width: 100px;
-    height: auto
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
 }
 
 .innerContainer1 {
@@ -171,7 +179,7 @@ body {
 }
 .container2, .container3 {
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-around;
 }
 
 .cardcontainer:hover {

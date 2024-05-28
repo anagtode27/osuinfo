@@ -102,10 +102,14 @@ const populateInfo = (data) => {
     // Append the inner container to the first container
     container1.appendChild(innerContainer1);
 
+    const canvasContainer = document.createElement('div');
+    canvasContainer.className = "canvasContainer";
+    container1.appendChild(canvasContainer)
+
     // Create the canvas for the chart
     const canvas = document.createElement('canvas');
     canvas.id = 'myChart';
-    container1.appendChild(canvas);
+    canvasContainer.appendChild(canvas);
 
     // Append the first container to the main container
     cardContainer.appendChild(container1);
@@ -116,7 +120,7 @@ const populateInfo = (data) => {
 
     // Create and append elements to the second container
     const globalRanking = document.createElement('p');
-    globalRanking.textContent = `Ranked #${data[0][0].pp_rank} in the world`;
+    globalRanking.textContent = `Ranked #${numberWithCommas(data[0][0].pp_rank)} in the world`;
     container2.appendChild(globalRanking);
 
     const performancePts = document.createElement('p');
@@ -136,7 +140,7 @@ const populateInfo = (data) => {
 
     // Create and append elements to the third container
     const countryRanking = document.createElement('p');
-    countryRanking.textContent = `Ranked #${numberWithCommas(data[0][0].pp_country_rank)} in ${getCountryName(data[0][0].country)}`;
+    countryRanking.textContent = `Ranked #${numberWithCommas(data[0][0].pp_country_rank)} in ${data[0][0].country}`;
     container3.appendChild(countryRanking);
 
     const timePlayed = document.createElement('p');
@@ -154,7 +158,7 @@ const populateInfo = (data) => {
     // 
     const card = document.getElementById("card");
     card.appendChild(cardContainer);
-}
+
 
     /*
 
@@ -207,7 +211,6 @@ const populateInfo = (data) => {
 
     `;
     */
-    /*
     const ctx = document.getElementById('myChart');
 
     if (myChart) {
@@ -236,15 +239,18 @@ const populateInfo = (data) => {
         },
         plugins: {
             title: {
-                display: true,
+                display: false,
                 text: "Rank Distribution"
+            },
+            legend: {
+                display: false
             }
         }
       }
     })
 
 };
-*/
+
 
 let isoCountries = {
     'AF' : 'Afghanistan',
