@@ -84,6 +84,6 @@ app.get('/get_user_best/:user', async (req, res) => {
     // Wait for all the beatmap information to be fetched
     const beatmap_info = await Promise.all(beatmapsPromises);
     const compiledInfo = [play_data, beatmap_info]
-    console.log(compiledInfo);
+    //console.log(compiledInfo);
     res.json(compiledInfo);
 });

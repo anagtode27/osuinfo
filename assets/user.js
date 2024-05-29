@@ -44,7 +44,6 @@ const getUserData = async () => {
             throw new Error ("Blank username");
         } 
 
-        
         // Get general info
         let api_url = `/get_user_data/${user_name}`;
         let fetch_response = await fetch(api_url);
@@ -64,9 +63,9 @@ const getUserData = async () => {
 
         // Combine data into a single array, pass to populate functions
         const consolidated_data = [data_user, pfp_img_b64, compiled_data_user_best];
-        console.log(consolidated_data[2]);
+        console.log(consolidated_data);
         populateUserCard(consolidated_data);
-        populateUserPlays(consolidated_data[2]);
+        populateUserPlays(consolidated_data);
     }
     catch (error) {
         console.error(error);
@@ -239,7 +238,7 @@ const populateUserCard = (data) => {
         plugins: {
             title: {
                 display: true,
-                text: "Score Distribution"
+                text: "Grade Distribution"
             },
             legend: {
                 display: false
@@ -252,34 +251,107 @@ const populateUserCard = (data) => {
     document.getElementById("statusText").innerHTML = ""; // Remove the status text AFTER populating the card,
                                                           // otherwise it looks jank because of delay
 };
+// data[2][0][0].rank 
 
+
+// ${data[2][1][0].title} (${data[2][1][0].version})
 const populateUserPlays = (data) => { 
+
+    // PLEASE clean up this function with a loop.
+
     document.getElementById("plays").innerHTML = `
     <table>
         <div class="headerContainer">
-            <div class="playsHeader">{USER's} Highest PP Plays:</div>
+            <div class="playsHeader">${data[0][0].username}'s Best Plays:</div>
         </div>
         <tr class="header">
             <th>Rank</th>
+            <th>Grade</th>
             <th>Name</th>
             <th>Mods</th>
             <th>Max Combo</th>
             <th>Performance Points</th>
         </tr>
         <tr>
-            <td>S</td>
+            <td>#1</td>
+            <td>${data[2][0][0].rank}</td>
+            <td>${data[2][1][0][0].title} (${data[2][1][0][0].version})</td>
+            <td>DT</td>
+            <td>${data[2][0][0].maxcombo}x</td>
+            <td>${Math.round(parseInt(data[2][0][0].pp) * 100) / 100}pp</td>
+        </tr>
+        <tr>8
+            <td>#2</td>
+            <td>${data[2][0][1].rank}</td>
             <td>Angel with a Shotgun (Sotark's Extra)</td>
             <td>DT</td>
-            <td>477x</td>
-            <td>412</td>
+            <td>${data[2][0][1].maxcombo}x</td>
+            <td>${Math.round(parseInt(data[2][0][1].pp) * 100) / 100}pp</td>
         </tr>
         <tr>
-            <td>S</td>
+            <td>#3</td>
+            <td>${data[2][0][2].rank}</td>
             <td>Angel with a Shotgun (Sotark's Extra)</td>
             <td>DT</td>
-            <td>477x</td>
-            <td>412</td>
+            <td>${data[2][0][2].maxcombo}x</td>
+            <td>${Math.round(parseInt(data[2][0][2].pp) * 100) / 100}pp</td>
         </tr>
+        <tr>
+            <td>#4</td>
+            <td>${data[2][0][3].rank}</td>
+            <td>Angel with a Shotgun (Sotark's Extra)</td>
+            <td>DT</td>
+            <td>${data[2][0][3].maxcombo}x</td>
+            <td>${Math.round(parseInt(data[2][0][3].pp) * 100) / 100}pp</td>
+        </tr>  
+        <tr>
+            <td>#5</td>
+            <td>${data[2][0][3].rank}</td>
+            <td>Angel with a Shotgun (Sotark's Extra)</td>
+            <td>DT</td>
+            <td>${data[2][0][3].maxcombo}x</td>
+            <td>${Math.round(parseInt(data[2][0][3].pp) * 100) / 100}pp</td>
+        </tr>  
+        <tr>
+            <td>#6</td>
+            <td>${data[2][0][4].rank}</td>
+            <td>Angel with a Shotgun (Sotark's Extra)</td>
+            <td>DT</td>
+            <td>${data[2][0][4].maxcombo}x</td>
+            <td>${Math.round(parseInt(data[2][0][4].pp) * 100) / 100}pp</td>
+        </tr>  
+        <tr>
+            <td>#7</td>
+            <td>${data[2][0][5].rank}</td>
+            <td>Angel with a Shotgun (Sotark's Extra)</td>
+            <td>DT</td>
+            <td>${data[2][0][5].maxcombo}x</td>
+            <td>${Math.round(parseInt(data[2][0][5].pp) * 100) / 100}pp</td>
+        </tr>  
+        <tr>
+            <td>#8</td>        
+            <td>${data[2][0][6].rank}</td>
+            <td>Angel with a Shotgun (Sotark's Extra)</td>
+            <td>DT</td>
+            <td>${data[2][0][6].maxcombo}x</td>
+            <td>${Math.round(parseInt(data[2][0][6].pp) * 100) / 100}pp</td>
+        </tr>  
+        <tr>
+            <td>#9</td>
+            <td>${data[2][0][7].rank}</td>
+            <td>Angel with a Shotgun (Sotark's Extra)</td>
+            <td>DT</td>
+            <td>${data[2][0][7].maxcombo}x</td>
+            <td>${Math.round(parseInt(data[2][0][7].pp) * 100) / 100}pp</td>
+        </tr>  
+        <tr>
+            <td>#10</td>
+            <td>${data[2][0][8].rank}</td>
+            <td>Angel with a Shotgun (Sotark's Extra)</td>
+            <td>DT</td>
+            <td>${data[2][0][8].maxcombo}x</td>
+            <td>${Math.round(parseInt(data[2][0][8].pp) * 100) / 100}pp</td>
+        </tr>  
     </table> 
     `;
 
