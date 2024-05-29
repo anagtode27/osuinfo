@@ -15,7 +15,7 @@ app.listen(port, () => {
 });
 
 // Serve public directory to client
-app.use(express.static("public"));
+app.use(express.static("assets"));
 
 // User data endpoint
 app.get('/get_user_data/:user', async (req, res) => {
@@ -68,3 +68,20 @@ app.get('/get_thumbnail_img/:id', async (req, res) => {
     res.send(data_b64);
 });
 
+app.get('/get_user_best/:user', async (req, res) => {
+    const api_url = `https://osu.ppy.sh/api/get_user_best?k=${process.env.API_KEY}&u=${req.params.user}`;
+    const fetch_response = await fetch(api_url);
+    const play_data = await fetch_response.json();
+
+    // Assuming 'data' is an array of best plays, we need to iterate over it correctly
+    const beatmapsPromises = play_data.map(async (play) => {
+        const beatmapApiUrl = `https://osu.ppy.sh/api/get_beatmaps?k=${process.env.API_KEY}&u=${play.beatmap_id}`;
+        const beatmapResponse = await fetch(beatmapApiUrl);
+        return beatmapResponse.json(); // This will be a promise
+    });
+
+    // Wait for all the beatmap information to be fetched
+    const beatmap_info = await Promise.all(beatmapsPromises);
+    const compiledInfo = [play_data, beatmap_info]
+    res.json(compiledInfo);
+});

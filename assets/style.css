@@ -1,0 +1,205 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* outline: 3px solid red; */
+}
+
+body {
+    font-family: "Fira Sans", sans-serif;
+    background-color: #e2d6d6;
+    color: black;
+}
+
+.query-header {
+    background-color: pink;
+    padding-top: 5px;
+    border-bottom: solid black;
+    text-align: center;
+}
+
+.query-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.query-nav p {
+    margin-top: 15px;
+}
+
+.query-type {
+    display: flex;
+    padding: 0;
+    justify-content: space-evenly;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    width: 50%;
+}
+
+.query-type li {
+    list-style-type: none;
+}
+
+.bigcontainer {
+    display: flex;
+    justify-content: center;
+    /* outline: 3px solid red; */
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5px; 
+}
+.playerForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.userInput {
+    font-family: inherit;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 4px;
+    text-align: center;
+    width: 300px;
+    border: 3px solid #ccc;
+    outline: none;
+    transition-duration: 0.5s;
+}
+
+.userInput:focus {
+    border: 3px solid #555;
+}
+
+.userInput:focus::placeholder {
+    color: transparent;
+}
+
+.btn {
+    display: block;
+    width: 200px;
+    font-family: inherit;
+    transition-duration: 0.4s;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.btn:hover {
+    cursor: pointer;
+    color: black;
+    background-color: #c75287c5;
+}
+
+.btn:active {
+    transition-duration: 0s;
+    padding: 8px;
+}
+
+.statusText {
+    margin-top: 7px;
+
+}
+.poke-name {
+    text-align: center;
+    font-weight: 600;
+}
+
+.stats {
+    justify-content: space-around;
+    text-align: center;
+}
+.stats.comparison h3 {
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 100px;
+}
+.stats p {
+    color: #404060;
+}
+
+.comparisonCard {
+    margin-left: 10px;
+    margin-right: 10px;
+    /* outline: 3px solid red; */
+}
+
+.buttonContainer {
+    justify-content: center;
+    margin-top: -5px; 
+}
+
+.card {
+    margin-top: 10px;
+}
+
+.cardContainer {
+    padding: 5px;
+	display: flex;
+	flex-direction: column;
+	border: 1px solid red;
+	width: 450px;
+	gap: 10px;
+	box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+	transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.container1 {
+	display: flex;
+    justify-content: space-around;    
+}
+
+.canvasContainer {
+    width: 120px;
+    height: 120px;
+}
+.container1 img {
+    width: 130px;
+    height: 130px;
+    border-radius: 40px;
+    border-style: inset;
+    border-width: 4px;
+}
+
+.innerContainer1 {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+    padding-left: 20px;
+}
+
+.container2, .container3 {
+	display: flex;
+	justify-content: space-between;
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
+.cardContainer:hover {
+  background-color: #f0f0f0; /* New background color on hover */
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2); /* Enhanced shadow on hover */
+  transform: scale(1.05); /* Slightly larger scale on hover */
+}
+
+.cardContainer a {
+    /* text-decoration: underline; */
+    color: black; 
+    transition: color 0.2s ease; 
+  }
+  
+  .cardContainer a:visited { 
+    text-decoration: none;
+    color: black;
+  }
+  
+  .cardContainer a:hover {
+    color: #007bff; 
+    cursor: pointer;
+  }
+  
+  
+
