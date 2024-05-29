@@ -39,18 +39,16 @@ const onButtonClick = async (btn) => {
 
             // Lock the button 
             canClick = false;
-            button.style.backgroundColor = "grey";
+            button.classList.add("lockedBtn");
+            button.classList.remove("unlockedBtn");
             button.disabled = true;      
-            button.style.cursor = "not-allowed";      
-            button.style.pointerEvents = 'none';
 
             // Sets to these conditions after time specified
             setTimeout(() => {
                 canClick = true;
-                button.style.backgroundColor = "#c75287c5";
                 button.disabled = false;
-                button.style.cursor = "pointer";
-                button.style.pointerEvents = 'auto';
+                button.classList.add("unlockedBtn");
+                button.classList.remove("lockedBtn");
             }, 3000); // in milliseconds 
 
             // Clean up last request
@@ -67,7 +65,15 @@ const onButtonClick = async (btn) => {
             const user_name = getTextInput("userInput");
             if (user_name === -1) {
                 document.getElementById("statusText").innerHTML = "Please don't leave the name blank!";
-                canClick = true; 
+                
+                // Fix button immediately, if disabled 
+                if (canClick === false) {
+                    canClick = true;
+                    button.disabled = false;
+                    button.classList.add("unlockedBtn");
+                    button.classList.remove("lockedBtn");
+                }
+
                 throw new Error("Blank username");
             }
 

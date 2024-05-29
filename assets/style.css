@@ -76,7 +76,7 @@ body {
     color: transparent;
 }
 
-.btn {
+.unlockedBtn, .lockedBtn {
     display: block;
     width: 200px;
     font-family: inherit;
@@ -88,15 +88,19 @@ body {
     background-color: white;
 }
 
-.btn:hover {
+.lockedBtn {
+    background-color: grey;
+}
+
+.lockedBtn:hover {
+    cursor: "not-allowed";
+    pointer-events: none;     
+}
+
+.unlockedBtn:hover {
     cursor: pointer;
     color: black;
     background-color: #c75287c5;
-}
-
-.btn:active {
-    transition-duration: 0s;
-    padding: 8px;
 }
 
 .statusText {
