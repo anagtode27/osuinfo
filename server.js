@@ -72,7 +72,6 @@ app.get('/get_user_best/:user', async (req, res) => {
     const api_url = `https://osu.ppy.sh/api/get_user_best?k=${process.env.API_KEY}&u=${req.params.user}`;
     const fetch_response = await fetch(api_url);
     const play_data = await fetch_response.json();
-    //console.log(play_data);
 
     // Assuming 'data' is an array of best plays, we need to iterate over it correctly
     const beatmapsPromises = play_data.map(async (play) => {
@@ -84,6 +83,5 @@ app.get('/get_user_best/:user', async (req, res) => {
     // Wait for all the beatmap information to be fetched
     const beatmap_info = await Promise.all(beatmapsPromises);
     const compiledInfo = [play_data, beatmap_info]
-    //console.log(compiledInfo);
     res.json(compiledInfo);
 });

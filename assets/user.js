@@ -1,8 +1,10 @@
+// When document is fully loaded, attach eventlistener
 document.addEventListener('DOMContentLoaded', () => {
     button = document.getElementById("btn");
     button.addEventListener("click", () => getUserData());  
 });
 
+// Handles checking if input is empty string or not
 const getTextInput = (elementId) => {
     if (document.getElementById(elementId).value === "") {
         return -1;
@@ -12,10 +14,12 @@ const getTextInput = (elementId) => {
     }
 };
 
+// Thanks stackoverflow lol
 const numberWithCommas = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
+// Translates country code using massive dictionary at the bottom 
 const getCountryName = (countryCode) => {
     if (isoCountries.hasOwnProperty(countryCode)) {
         return isoCountries[countryCode];
@@ -25,6 +29,7 @@ const getCountryName = (countryCode) => {
     }
 }
 
+// Gets all of the user information and compiles it into one object
 const getUserData = async () => {
     try { 
         
@@ -33,9 +38,9 @@ const getUserData = async () => {
 
         // And also need to check if cardContainer and canvas exist, remove if they di
         const potentiallyRemove = document.getElementById("cardContainer");
-        if (potentiallyRemove) {
-            potentiallyRemove.remove(); // this also takes care of myChart.destroy(); AND the global declaration of myChart. 
-        }                               // not fully sure how though. should look into this.
+        if (potentiallyRemove) {        // this also takes care of myChart.destroy(); AND the global declaration of myChart.
+            potentiallyRemove.remove(); // not fully sure how though. should look into this.
+        }                      
 
         // Then, validate the input
         const user_name = getTextInput("userInput");
@@ -48,14 +53,13 @@ const getUserData = async () => {
         let api_url = `/get_user_data/${user_name}`;
         let fetch_response = await fetch(api_url);
         const data_user = await fetch_response.json();
-        //console.log(data_user);
 
         // Get pfp
         api_url = `/get_user_pfp/${data_user[0].user_id}`;
         fetch_response = await fetch(api_url);
         const pfp_img_b64 = await fetch_response.text();
 
-        // Get recent scores
+        // Get best scores
         api_url = `/get_user_best/${user_name}`;
         fetch_response = await fetch(api_url);
         const compiled_data_user_best = await fetch_response.json();
@@ -63,7 +67,6 @@ const getUserData = async () => {
 
         // Combine data into a single array, pass to populate functions
         const consolidated_data = [data_user, pfp_img_b64, compiled_data_user_best];
-        console.log(consolidated_data);
         populateUserCard(consolidated_data);
         populateUserPlays(consolidated_data);
     }
@@ -72,13 +75,8 @@ const getUserData = async () => {
     }
 };
 
+// Populates the usercard with the compiled json data
 const populateUserCard = (data) => {
-
-    // Decode img base64 into proper source
-    const imgSource = 'data:image/jpeg;base64,' + data[1];
-
-    // Splits date into <date>, <time> array and using date section in html
-    const joinDateInfo = data[0][0].join_date.split(" ");
 
     /* ########################################################
     FOLLOWING LINES BUILD THE FOLLOWING FRAMEWORK IN THE DOM
@@ -108,6 +106,12 @@ const populateUserCard = (data) => {
         </div>
     </div>
     ######################################################## */ 
+
+    // Decode img base64 into proper source
+    const imgSource = 'data:image/jpeg;base64,' + data[1];
+
+    // Splits date into <date>, <time> array and using date section in html
+    const joinDateInfo = data[0][0].join_date.split(" ");
 
     // Create the main container
     const cardContainer = document.createElement('div');
@@ -209,7 +213,6 @@ const populateUserCard = (data) => {
     const card = document.getElementById("card");
     card.appendChild(cardContainer);
 
-
     // Following lines configure the chart, using Chart.js
     const ctx = document.getElementById('myChart');
     
@@ -247,19 +250,14 @@ const populateUserCard = (data) => {
         }
     });
 
-    // This looks random but read comment
-    document.getElementById("statusText").innerHTML = ""; // Remove the status text AFTER populating the card,
-                                                          // otherwise it looks jank because of delay
-                        
+    // Remove the status text AFTER populating the card, otherwise it looks jank if you put it at the start of this function
+    document.getElementById("statusText").innerHTML = ""; 
 };
-// data[2][0][0].rank 
 
-
-// ${data[2][1][0].title} (${data[2][1][0].version})
+// Populates the user's best plays with the compiled json data
 const populateUserPlays = (data) => { 
 
-    // PLEASE clean up this function with a loop.
-
+    // PLEASE clean up this function with a loop. This is terrible.
     document.getElementById("plays").innerHTML = `
     <table>
         <div class="headerContainer">
@@ -316,13 +314,7 @@ const populateUserPlays = (data) => {
     </table> 
     `;
 
-
-    
 }
-
-
-
-
 
 // Dictionary of countries 
 let isoCountries = {
@@ -572,8 +564,3 @@ let isoCountries = {
     'ZM' : 'Zambia',
     'ZW' : 'Zimbabwe'
 };
-
-
-
-
-

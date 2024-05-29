@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     button = document.getElementById("btn");
     button.addEventListener("click", () => getBeatmapInfo());  
 });
-
+// Slightly outdated, fix when merging this .js file into the main one. ? or maybe not, idk how to approach it yet
 const getTextInput = (elementId) => {
     return document.getElementById(elementId).value;
 }
