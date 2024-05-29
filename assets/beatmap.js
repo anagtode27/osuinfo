@@ -10,7 +10,7 @@ const getTextInput = (elementId) => {
 const getBeatmapInfo = async () => {
 
     // Get general beatmap info
-    const beatmap_id = getTextInput("user-form");
+    const beatmap_id = getTextInput("beatmap-form");
     let api_url = `/get_beatmaps/${beatmap_id}`;
     let fetch_response = await fetch(api_url);
     const data_beatmap = await fetch_response.json();

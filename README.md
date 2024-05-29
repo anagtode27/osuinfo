@@ -1,15 +1,17 @@
 osu!Info
 
-Site will have:
+Tasks (no order, choose between):
+    -Random small things to do [like add links to plays] (easy)
+    -Work on simple styling (easy)
 
-1) User stats 
-    -/get_user, pfp endpoint, and /get_user_best 
-
-3) Beatmap search 
-    -/get_beatmaps, cover img endpoint
-
-4) Multiplayer information
-    -/get_match
-
-Current task: choose between working on functionality, styling, or how to catch backend errors.
+    -Work on extending functionality for beatmap and multiplayer(medium)
+    -Work on implementing enum reader for mod (medium)
+    -Work on changing plays section into a looped function (medium)
+    -Make website design better (medium)
+    -Find website logo (ask some AI model to make art?) (medium)
+    
+    -Research how to make website good for mobile (hard)
+    -Add client side button rate limit (hard)
+    -Handle incorrect api calls, by figuring out how to catch backend fetch errors w trycatch and send back to client (hard)
+     
 

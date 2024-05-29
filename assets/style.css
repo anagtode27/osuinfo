@@ -113,7 +113,7 @@ body {
     padding: 5px;
 	display: flex;
 	flex-direction: column;
-	border: 1px solid red;
+	border: 2px solid rgba(0, 102, 255, 0.13);
 	width: 500px;
 	gap: 10px;
 	box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -152,13 +152,12 @@ body {
 }
 
 .cardContainer:hover {
-  background-color: #f0f0f0; /* New background color on hover */
-  box-shadow: 0 8px 16px rgba(0,0,0,0.2); /* Enhanced shadow on hover */
-  transform: scale(1.05); /* Slightly larger scale on hover */
+  background-color: #f3e6f1; 
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2); 
+  transform: scale(1.05); 
 }
 
 .cardContainer a {
-    /* text-decoration: underline; */
     color: black; 
     transition: color 0.2s ease; 
 }
@@ -184,6 +183,7 @@ table {
     table-layout: fixed;
     border: 1px solid black;
     border-collapse: collapse;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .headerContainer {
@@ -191,9 +191,15 @@ table {
     justify-content: center;
 }
 
-th, td {
+th {
     border-bottom: 1px solid black;
     padding: 8px;
+}
+
+td {
+    border-bottom: 1px solid black;
+    padding: 8px;
+    height: 20px;
 }
 
 tr {
@@ -205,9 +211,18 @@ tr.header th {
     text-align: center;
 }
 
+.bestPlay td {
+    font-weight: bolder;
+}
+
 .playsHeader {
     font-size: 24px;
-    margin-bottom: 10px;
+    margin-bottom: 2px;
+}
+
+
+.beatmap-form {
+    width: 200px;
 }
 
   

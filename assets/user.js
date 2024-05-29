@@ -29,15 +29,15 @@ const getUserData = async () => {
     try { 
         
         // Since this is the onclick function, we need to clean up the last request, if there was one
-        
-        // Check if cardContainer and canvas exist
+        document.getElementById("plays").innerHTML = "";
+
+        // And also need to check if cardContainer and canvas exist, remove if they di
         const potentiallyRemove = document.getElementById("cardContainer");
         if (potentiallyRemove) {
             potentiallyRemove.remove(); // this also takes care of myChart.destroy(); AND the global declaration of myChart. 
         }                               // not fully sure how though. should look into this.
-        
 
-        // Validate input, if bad throw error.
+        // Then, validate the input
         const user_name = getTextInput("userInput");
         if (user_name === -1) {
             document.getElementById("statusText").innerHTML = "Please don't leave the name blank!"; 
@@ -147,7 +147,7 @@ const populateUserCard = (data) => {
     innerContainer1.appendChild(joinDate);
 
     const playCount = document.createElement('p');
-    playCount.textContent = `${numberWithCommas(parseInt(data[0][0].playcount))} times retried`;
+    playCount.textContent = `${numberWithCommas(parseInt(data[0][0].playcount))} plays logged`;
     innerContainer1.appendChild(playCount);
 
     // Append the inner container to the first container
@@ -250,6 +250,7 @@ const populateUserCard = (data) => {
     // This looks random but read comment
     document.getElementById("statusText").innerHTML = ""; // Remove the status text AFTER populating the card,
                                                           // otherwise it looks jank because of delay
+                        
 };
 // data[2][0][0].rank 
 
@@ -272,92 +273,54 @@ const populateUserPlays = (data) => {
             <th>Max Combo</th>
             <th>Performance Points</th>
         </tr>
-        <tr>
-            <td>#1</td>
+        <tr class="bestPlay">
+            <td>&#128081;</td>
             <td>${data[2][0][0].rank}</td>
             <td>${data[2][1][0][0].title} (${data[2][1][0][0].version})</td>
-            <td>DT</td>
-            <td>${data[2][0][0].maxcombo}x</td>
-            <td>${Math.round(parseInt(data[2][0][0].pp) * 100) / 100}pp</td>
+            <td>WIP</td>
+            <td>${numberWithCommas(data[2][0][0].maxcombo)}x</td>
+            <td>${numberWithCommas(Math.round(parseInt(data[2][0][0].pp) * 100) / 100)}pp</td>
         </tr>
-        <tr>8
+        <tr>
             <td>#2</td>
             <td>${data[2][0][1].rank}</td>
-            <td>Angel with a Shotgun (Sotark's Extra)</td>
-            <td>DT</td>
-            <td>${data[2][0][1].maxcombo}x</td>
-            <td>${Math.round(parseInt(data[2][0][1].pp) * 100) / 100}pp</td>
+            <td>${data[2][1][1][0].title} (${data[2][1][1][0].version})</td>
+            <td>WIP</td>
+            <td>${numberWithCommas(data[2][0][1].maxcombo)}x</td>
+            <td>${numberWithCommas(Math.round(parseInt(data[2][0][1].pp) * 100) / 100)}pp</td>
         </tr>
         <tr>
             <td>#3</td>
             <td>${data[2][0][2].rank}</td>
-            <td>Angel with a Shotgun (Sotark's Extra)</td>
-            <td>DT</td>
-            <td>${data[2][0][2].maxcombo}x</td>
-            <td>${Math.round(parseInt(data[2][0][2].pp) * 100) / 100}pp</td>
+            <td>${data[2][1][2][0].title} (${data[2][1][2][0].version})</td>
+            <td>WIP</td>
+            <td>${numberWithCommas(data[2][0][2].maxcombo)}x</td>
+            <td>${numberWithCommas(Math.round(parseInt(data[2][0][2].pp) * 100) / 100)}pp</td>
         </tr>
         <tr>
             <td>#4</td>
             <td>${data[2][0][3].rank}</td>
-            <td>Angel with a Shotgun (Sotark's Extra)</td>
-            <td>DT</td>
-            <td>${data[2][0][3].maxcombo}x</td>
-            <td>${Math.round(parseInt(data[2][0][3].pp) * 100) / 100}pp</td>
+            <td>${data[2][1][3][0].title} (${data[2][1][3][0].version})</td>
+            <td>WIP</td>
+            <td>${numberWithCommas(data[2][0][3].maxcombo)}x</td>
+            <td>${numberWithCommas(Math.round(parseInt(data[2][0][3].pp) * 100) / 100)}pp</td>
         </tr>  
         <tr>
             <td>#5</td>
-            <td>${data[2][0][3].rank}</td>
-            <td>Angel with a Shotgun (Sotark's Extra)</td>
-            <td>DT</td>
-            <td>${data[2][0][3].maxcombo}x</td>
-            <td>${Math.round(parseInt(data[2][0][3].pp) * 100) / 100}pp</td>
-        </tr>  
-        <tr>
-            <td>#6</td>
             <td>${data[2][0][4].rank}</td>
-            <td>Angel with a Shotgun (Sotark's Extra)</td>
-            <td>DT</td>
-            <td>${data[2][0][4].maxcombo}x</td>
-            <td>${Math.round(parseInt(data[2][0][4].pp) * 100) / 100}pp</td>
-        </tr>  
-        <tr>
-            <td>#7</td>
-            <td>${data[2][0][5].rank}</td>
-            <td>Angel with a Shotgun (Sotark's Extra)</td>
-            <td>DT</td>
-            <td>${data[2][0][5].maxcombo}x</td>
-            <td>${Math.round(parseInt(data[2][0][5].pp) * 100) / 100}pp</td>
-        </tr>  
-        <tr>
-            <td>#8</td>        
-            <td>${data[2][0][6].rank}</td>
-            <td>Angel with a Shotgun (Sotark's Extra)</td>
-            <td>DT</td>
-            <td>${data[2][0][6].maxcombo}x</td>
-            <td>${Math.round(parseInt(data[2][0][6].pp) * 100) / 100}pp</td>
-        </tr>  
-        <tr>
-            <td>#9</td>
-            <td>${data[2][0][7].rank}</td>
-            <td>Angel with a Shotgun (Sotark's Extra)</td>
-            <td>DT</td>
-            <td>${data[2][0][7].maxcombo}x</td>
-            <td>${Math.round(parseInt(data[2][0][7].pp) * 100) / 100}pp</td>
-        </tr>  
-        <tr>
-            <td>#10</td>
-            <td>${data[2][0][8].rank}</td>
-            <td>Angel with a Shotgun (Sotark's Extra)</td>
-            <td>DT</td>
-            <td>${data[2][0][8].maxcombo}x</td>
-            <td>${Math.round(parseInt(data[2][0][8].pp) * 100) / 100}pp</td>
-        </tr>  
+            <td>${data[2][1][4][0].title} (${data[2][1][4][0].version})</td>
+            <td>WIP</td>
+            <td>${numberWithCommas(data[2][0][4].maxcombo)}x</td>
+            <td>${numberWithCommas(Math.round(parseInt(data[2][0][4].pp) * 100) / 100)}pp</td>
+        </tr>    
     </table> 
     `;
 
 
     
 }
+
+
 
 
 
@@ -609,6 +572,7 @@ let isoCountries = {
     'ZM' : 'Zambia',
     'ZW' : 'Zimbabwe'
 };
+
 
 
 
