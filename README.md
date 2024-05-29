@@ -1,6 +1,7 @@
 osu!Info
 
 Tasks (no order, choose between):
+
     -Random small things to do [like add links to plays] (easy)
     -Work on simple styling (easy)
 
