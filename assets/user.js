@@ -32,16 +32,14 @@ const getCountryName = (countryCode) => {
 // Gets all of the user information and compiles it into one object
 const getUserData = async () => {
     try { 
-        
         // Since this is the onclick function, we need to clean up the last request, if there was one
         document.getElementById("plays").innerHTML = "";
-
+        document.getElementById("statusText").innerHTML = ""; 
         // And also need to check if cardContainer and canvas exist, remove if they di
         const potentiallyRemove = document.getElementById("cardContainer");
-        if (potentiallyRemove) {        // this also takes care of myChart.destroy(); AND the global declaration of myChart.
-            potentiallyRemove.remove(); // not fully sure how though. should look into this.
+        if (potentiallyRemove) {       
+            potentiallyRemove.remove(); // not fully sure how this works
         }                      
-
         // Then, validate the input
         const user_name = getTextInput("userInput");
         if (user_name === -1) {
@@ -139,6 +137,7 @@ const populateUserCard = (data) => {
     // Make the h2 a link
     const userLink = document.createElement('a');
     userLink.href = `https://osu.ppy.sh/users/${data[0][0].user_id}`; 
+    userLink.target = "_blank";
     userLink.appendChild(userName);
     innerContainer1.appendChild(userLink);
 
@@ -249,15 +248,12 @@ const populateUserCard = (data) => {
           }
         }
     });
-
-    // Remove the status text AFTER populating the card, otherwise it looks jank if you put it at the start of this function
-    document.getElementById("statusText").innerHTML = ""; 
 };
 
 // Populates the user's best plays with the compiled json data
 const populateUserPlays = (data) => { 
 
-    // PLEASE clean up this function with a loop. This is terrible.
+    // PLEASE clean up this function with a loop. This is terrible. But at least it works
     document.getElementById("plays").innerHTML = `
     <table>
         <div class="headerContainer">
