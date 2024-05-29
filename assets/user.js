@@ -1,7 +1,7 @@
 // When document is fully loaded, attach eventlistener
 document.addEventListener('DOMContentLoaded', () => {
     button = document.getElementById("btn");
-    button.addEventListener("click", () => getUserData());  
+    button.addEventListener("click", () => onButtonClick("btn"));  
 });
 
 // Handles checking if input is empty string or not
@@ -29,24 +29,61 @@ const getCountryName = (countryCode) => {
     }
 }
 
-// Gets all of the user information and compiles it into one object
-const getUserData = async () => {
-    try { 
-        // Since this is the onclick function, we need to clean up the last request, if there was one
-        document.getElementById("plays").innerHTML = "";
-        document.getElementById("statusText").innerHTML = ""; 
-        // And also need to check if cardContainer and canvas exist, remove if they di
-        const potentiallyRemove = document.getElementById("cardContainer");
-        if (potentiallyRemove) {       
-            potentiallyRemove.remove(); // not fully sure how this works
-        }                      
-        // Then, validate the input
-        const user_name = getTextInput("userInput");
-        if (user_name === -1) {
-            document.getElementById("statusText").innerHTML = "Please don't leave the name blank!"; 
-            throw new Error ("Blank username");
-        } 
+// Flag to control button locks
+let canClick = true; 
+const onButtonClick = async (btn) => {
 
+    const button = document.getElementById(btn);
+    try {
+        if (canClick) {
+
+            // Lock the button 
+            canClick = false;
+            button.style.backgroundColor = "grey";
+            button.disabled = true;      
+            button.style.cursor = "not-allowed";      
+            button.style.pointerEvents = 'none';
+
+            // Sets to these conditions after time specified
+            setTimeout(() => {
+                canClick = true;
+                button.style.backgroundColor = "#c75287c5";
+                button.disabled = false;
+                button.style.cursor = "pointer";
+                button.style.pointerEvents = 'auto';
+            }, 3000); // in milliseconds 
+
+            // Clean up last request
+            document.getElementById("plays").innerHTML = "";
+            document.getElementById("statusText").innerHTML = "";
+
+            // Check if cardContainer and canvas exist, remove if they do
+            const cardContainer = document.getElementById("cardContainer");
+            if (cardContainer) {
+                cardContainer.remove();
+            }
+
+            // Validate input
+            const user_name = getTextInput("userInput");
+            if (user_name === -1) {
+                document.getElementById("statusText").innerHTML = "Please don't leave the name blank!";
+                canClick = true; 
+                throw new Error("Blank username");
+            }
+
+            // Async API Function
+            await getUserData(user_name); 
+        }
+    }
+    catch (error) {
+        console.error(error);
+    }
+};
+
+
+// Gets all of the user information and compiles it into one object
+const getUserData = async (user_name) => {
+    try { 
         // Get general info
         let api_url = `/get_user_data/${user_name}`;
         let fetch_response = await fetch(api_url);
@@ -69,6 +106,7 @@ const getUserData = async () => {
         populateUserPlays(consolidated_data);
     }
     catch (error) {
+        // Need to throw errors based on serverside calls... hard to implement
         console.error(error);
     }
 };
