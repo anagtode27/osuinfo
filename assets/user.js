@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const getTextInput = (elementId) => {
-
     if (document.getElementById(elementId).value === "") {
         return -1;
     } 
@@ -29,7 +28,7 @@ const getCountryName = (countryCode) => {
 const getUserData = async () => {
     try { 
         
-        // Since this is the onclick function, we need to clean up the last request, if there was on
+        // Since this is the onclick function, we need to clean up the last request, if there was one
         
         // Check if cardContainer and canvas exist
         const potentiallyRemove = document.getElementById("cardContainer");
@@ -55,25 +54,26 @@ const getUserData = async () => {
         // Get pfp
         api_url = `/get_user_pfp/${data_user[0].user_id}`;
         fetch_response = await fetch(api_url);
-        const img_b64 = await fetch_response.text();
+        const pfp_img_b64 = await fetch_response.text();
 
         // Get recent scores
         api_url = `/get_user_best/${user_name}`;
         fetch_response = await fetch(api_url);
-        const data_user_best = await fetch_response.json();
+        const compiled_data_user_best = await fetch_response.json();
+        // use map function here to get the thumbnail for each beatmap 
 
-        // Combine data into a single array, pass to populate function
-        const consolidated_data = [data_user, img_b64, data_user_best];
+        // Combine data into a single array, pass to populate functions
+        const consolidated_data = [data_user, pfp_img_b64, compiled_data_user_best];
         console.log(consolidated_data[2]);
-        populateInfo(consolidated_data);
+        populateUserCard(consolidated_data);
+        populateUserPlays(consolidated_data[2]);
     }
     catch (error) {
         console.error(error);
     }
 };
 
-const populateInfo = (data) => {
-
+const populateUserCard = (data) => {
 
     // Decode img base64 into proper source
     const imgSource = 'data:image/jpeg;base64,' + data[1];
@@ -97,13 +97,11 @@ const populateInfo = (data) => {
                 <canvas id="myChart"></canvas>
             </div>
         </div>
-
         <div class="container2">
             <p>Ranked #35,000 globally</p>
             <p>Performance Pts: 5,423</p>
             <p>Accuracy: 95.23%</p>
         </div>
-
         <div class="container3">
             <p>Ranked #Number in the United States</p>
             <p>500 hours logged</p>
@@ -137,7 +135,7 @@ const populateInfo = (data) => {
 
     // Make the h2 a link
     const userLink = document.createElement('a');
-    userLink.href = `https://osu.ppy.sh/users/${data[0][0].user_id}`; // Replace with the actual URL
+    userLink.href = `https://osu.ppy.sh/users/${data[0][0].user_id}`; 
     userLink.appendChild(userName);
     innerContainer1.appendChild(userLink);
 
@@ -227,9 +225,9 @@ const populateInfo = (data) => {
             datasets: [{
             label: '',
             data: [amountOfSS, amountOfS, amountOfA],
-            backgroundColor: ['#c30b90', '#009daa', '#72c904'], // Set the colors for each slice here
-            borderColor: 'grey', // Set the border color for all slices here
-            borderWidth: 1 // Set the border width for all slices here
+            backgroundColor: ['#c30b90', '#009daa', '#72c904'], 
+            borderColor: 'grey', 
+            borderWidth: 1 
             }]
         },
         options: {
@@ -250,11 +248,46 @@ const populateInfo = (data) => {
         }
     });
 
+    // This looks random but read comment
     document.getElementById("statusText").innerHTML = ""; // Remove the status text AFTER populating the card,
                                                           // otherwise it looks jank because of delay
-    
-    
 };
+
+const populateUserPlays = (data) => { 
+    document.getElementById("plays").innerHTML = `
+    <table>
+        <div class="headerContainer">
+            <div class="playsHeader">{USER's} Highest PP Plays:</div>
+        </div>
+        <tr class="header">
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Mods</th>
+            <th>Max Combo</th>
+            <th>Performance Points</th>
+        </tr>
+        <tr>
+            <td>S</td>
+            <td>Angel with a Shotgun (Sotark's Extra)</td>
+            <td>DT</td>
+            <td>477x</td>
+            <td>412</td>
+        </tr>
+        <tr>
+            <td>S</td>
+            <td>Angel with a Shotgun (Sotark's Extra)</td>
+            <td>DT</td>
+            <td>477x</td>
+            <td>412</td>
+        </tr>
+    </table> 
+    `;
+
+
+    
+}
+
+
 
 // Dictionary of countries 
 let isoCountries = {

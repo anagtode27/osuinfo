@@ -189,17 +189,53 @@ body {
     /* text-decoration: underline; */
     color: black; 
     transition: color 0.2s ease; 
-  }
+}
   
-  .cardContainer a:visited { 
+.cardContainer a:visited { 
     text-decoration: none;
     color: black;
-  }
+}
   
-  .cardContainer a:hover {
+.cardContainer a:hover {
     color: #007bff; 
     cursor: pointer;
-  }
+}
+
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    table-layout: fixed;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.headerContainer {
+    display: flex;
+    justify-content: center;
+}
+
+th, td {
+    border-bottom: 1px solid black;
+    padding: 8px;
+}
+
+tr {
+	text-align: center
+}
+
+tr.header th {
+    background-color: #f2f2f2;
+    text-align: center;
+}
+
+.playsHeader {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
   
-  
+
+
 
