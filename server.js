@@ -1,7 +1,7 @@
 // Import Express to handle server routing
 import express from 'express';
 const app = express(); // app is an instance of Express application
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Import Fetch to make API calls from server-side
 import fetch from 'node-fetch';
