@@ -39,9 +39,9 @@ const onButtonClick = async (btn) => {
 
             // Lock the button 
             canClick = false;
+            button.disabled = true;
             button.classList.add("lockedBtn");
-            button.classList.remove("unlockedBtn");
-            button.disabled = true;      
+            button.classList.remove("unlockedBtn");      
 
             // Sets to these conditions after time specified
             setTimeout(() => {
@@ -65,15 +65,6 @@ const onButtonClick = async (btn) => {
             const user_name = getTextInput("userInput");
             if (user_name === -1) {
                 document.getElementById("statusText").innerHTML = "Please don't leave the name blank!";
-                
-                // Fix button immediately, if disabled 
-                if (canClick === false) {
-                    canClick = true;
-                    button.disabled = false;
-                    button.classList.add("unlockedBtn");
-                    button.classList.remove("lockedBtn");
-                }
-
                 throw new Error("Blank username");
             }
 
