@@ -29,22 +29,19 @@ const getCountryName = (countryCode) => {
     }
 };
 
-const lockButtonTemporarily = (button) => {
-    // Lock the button via class
+// Controls the state of button 
+const lockButton = (button) => {
     canClick = false;
     button.disabled = true;
     button.classList.add("lockedBtn");
-    button.classList.remove("unlockedBtn");      
-
-    // Unlock the button via class, after time specified
-    setTimeout(() => {
-        canClick = true;
-        button.disabled = false;
-        button.classList.add("unlockedBtn");
-        button.classList.remove("lockedBtn");
-    }, 1400); // in milliseconds 
+    button.classList.remove("unlockedBtn"); 
 };
-
+const unlockButton = (button) => {
+    canClick = true;
+    button.disabled = false;
+    button.classList.add("unlockedBtn");
+    button.classList.remove("lockedBtn");
+}
 
 const resetDisplay = () => {
     // Clear relevant texts
@@ -119,13 +116,14 @@ const getUserBestScores = async (userName) => {
 const onButtonClick = async (btn) => {
     try {
         const button = document.getElementById(btn);
-        lockButtonTemporarily(button);
+        lockButton(button);
         resetDisplay();
 
         // Validate input for empty string
         const userName = getTextInput("userInput");
         if (userName === -1) {
             document.getElementById("statusText").innerHTML = "Please don't leave the name blank!";
+            unlockButton(button);
             throw new Error("Blank username provided.");
         }
 
@@ -137,6 +135,7 @@ const onButtonClick = async (btn) => {
         const userBestScores = await getUserBestScores(userName);
 
         hideLoading();
+        unlockButton(button);
 
         // Mash data into 1 array, pass that array to populate functions
         const consolidatedData = [userGeneralInfo, userPfp, userBestScores];
@@ -149,7 +148,9 @@ const onButtonClick = async (btn) => {
 };
 
 // THIS FUNCTION NEEDS REFACTORING, BUT IDK HOW RN.
-// Populates the usercard with the compiled json data
+// Because of the canvas, I think I need to have the items literally on the dom
+// So I don't think I can use InnerHTML. But I should look into this more.
+// This function populates the usercard with the compiled json data
 const populateUserCard = (data) => {
 
     /* ########################################################

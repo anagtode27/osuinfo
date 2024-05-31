@@ -12,6 +12,7 @@ Tasks (no order, choose between):
     -Find website logo (ask some AI model to make art?) (medium)
     
     -Research how to make website good for mobile (hard)
+    -Add chatgpt user summaries with openai api? (hard)
     -Handle incorrect api calls, by figuring out how to catch backend fetch errors w trycatch and send back to client (hard)
      
 

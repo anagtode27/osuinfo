@@ -42,7 +42,7 @@ app.get('/get_user_recent/:user', async (req, res) => {
     res.json(data);
 });
 
-// Beatmap endpoint
+// Beatmap info endpoint
 app.get('/get_beatmaps/:id', async (req, res) => {
     const api_url = `https://osu.ppy.sh/api/get_beatmaps?k=${process.env.API_KEY}&b=${req.params.id}`;
     const fetch_response = await fetch(api_url);
@@ -68,6 +68,7 @@ app.get('/get_thumbnail_img/:id', async (req, res) => {
     res.send(data_b64);
 });
 
+// Best scores information endpoint
 app.get('/get_user_best/:user', async (req, res) => {
     const api_url = `https://osu.ppy.sh/api/get_user_best?k=${process.env.API_KEY}&u=${req.params.user}`;
     const fetch_response = await fetch(api_url);
