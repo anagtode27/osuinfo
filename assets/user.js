@@ -49,7 +49,7 @@ const onButtonClick = async (btn) => {
                 button.disabled = false;
                 button.classList.add("unlockedBtn");
                 button.classList.remove("lockedBtn");
-            }, 3000); // in milliseconds 
+            }, 1400); // in milliseconds 
 
             // Clean up last request
             document.getElementById("plays").innerHTML = "";
@@ -68,6 +68,7 @@ const onButtonClick = async (btn) => {
                 throw new Error("Blank username");
             }
 
+            loadingText = document.getElementById("loadingDiv").style.display = "block";
             // Async API Function
             await getUserData(user_name); 
         }
@@ -95,7 +96,10 @@ const getUserData = async (user_name) => {
         api_url = `/get_user_best/${user_name}`;
         fetch_response = await fetch(api_url);
         const compiled_data_user_best = await fetch_response.json();
-        // use map function here to get the thumbnail for each beatmap 
+        // use map function here to get the thumbnail for each beatmap?
+
+        // Data has been collected, now just populating, which is fast, so remove the loading icon 
+        loadingText = document.getElementById("loadingDiv").style.display = "none";
 
         // Combine data into a single array, pass to populate functions
         const consolidated_data = [data_user, pfp_img_b64, compiled_data_user_best];
@@ -533,13 +537,13 @@ let isoCountries = {
     'RW' : 'Rwanda',
     'BL' : 'Saint Barthelemy',
     'SH' : 'Saint Helena',
-    'KN' : 'Saint Kitts And Nevis',
+    'KN' : 'Saint Kites And Nevis',
     'LC' : 'Saint Lucia',
     'MF' : 'Saint Martin',
     'PM' : 'Saint Pierre And Miquelon',
     'VC' : 'Saint Vincent And Grenadines',
     'WS' : 'Samoa',
-    'SM' : 'San Marino',
+    'SM' : 'San Marion',
     'ST' : 'Sao Tome And Principe',
     'SA' : 'Saudi Arabia',
     'SN' : 'Senegal',
@@ -557,7 +561,7 @@ let isoCountries = {
     'LK' : 'Sri Lanka',
     'SD' : 'Sudan',
     'SR' : 'Suriname',
-    'SJ' : 'Svalbard And Jan Mayen',
+    'SJ' : 'Svalbard And Jan Mayon',
     'SZ' : 'Swaziland',
     'SE' : 'Sweden',
     'CH' : 'Switzerland',
@@ -574,7 +578,7 @@ let isoCountries = {
     'TN' : 'Tunisia',
     'TR' : 'Turkey',
     'TM' : 'Turkmenistan',
-    'TC' : 'Turks And Caicos Islands',
+    'TC' : 'Turks And Cairo Islands',
     'TV' : 'Tuvalu',
     'UG' : 'Uganda',
     'UA' : 'Ukraine',
