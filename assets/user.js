@@ -30,13 +30,13 @@ const getCountryName = (countryCode) => {
 };
 
 const lockButtonTemporarily = (button) => {
-    // Lock the button 
+    // Lock the button via class
     canClick = false;
     button.disabled = true;
     button.classList.add("lockedBtn");
     button.classList.remove("unlockedBtn");      
 
-    // Sets to these conditions after time specified
+    // Unlock the button via class, after time specified
     setTimeout(() => {
         canClick = true;
         button.disabled = false;
@@ -47,73 +47,98 @@ const lockButtonTemporarily = (button) => {
 
 
 const resetDisplay = () => {
+    // Clear relevant texts
     document.getElementById("plays").innerHTML = "";
     document.getElementById("statusText").innerHTML = "";
 
-    // Check if cardContainer exists, (must do this because its not just modifying the innerhtml)
+    // Check if cardContainer exists (must do this because its removing from the DOM)
     const cardContainer = document.getElementById("cardContainer");
     if (cardContainer) {
         cardContainer.remove();
     }
 };
 
+// Controls the visibility of the loading spinner
 const showLoading = () => {
     loadingText = document.getElementById("loadingDiv").style.display = "block";
 };
-
 const hideLoading = () => {
     loadingText = document.getElementById("loadingDiv").style.display = "none";
 };
 
 
 const getUserGeneralInfo = async (userName) => {
-    // Get general info
-    let url = `/get_user_data/${userName}`;
-    let response = await fetch(url);
-    const data = await response.json();
-    return data;
+    // Attempt to fetch general info
+    try {
+        let url = `/get_user_data/${userName}`;
+        let response = await fetch(url);
+        const data = await response.json();
+        if (!response.ok) {
+            throw new Error("Issue getting general data.");
+        }
+        return data;
+    }
+    catch (error) {
+        console.error(error);
+    }
 };
 
 const getUserPfp = async (userId) => {
-    let url = `/get_user_pfp/${userId}`;
-    let response = await fetch(url);
-    const data_b64 = await response.text();
-    return data_b64;
+    // Attempt to fetch pfp data
+    try {
+        let url = `/get_user_pfp/${userId}`;
+        let response = await fetch(url);
+        const data_b64 = await response.text();
+        if (!response.ok) {
+            throw new Error("Issue getting user pfp data.");
+        }
+        return data_b64;
+    }
+    catch (error) {
+        console.error(error);
+    }
 };
 
 const getUserBestScores = async (userName) => {
-    url = `/get_user_best/${userName}`;
-    response = await fetch(url);
-    const data = await response.json();
-    return data;
+    // Attempt to fetch best score data
+    try {
+        url = `/get_user_best/${userName}`;
+        let response = await fetch(url);
+        const data = await response.json();
+        if (!response.ok) {
+            throw new Error("Issue getting best score data.");
+        }
+        return data;
+    }
+    catch (error) {
+        console.error(error);
+    }
 };
 
-let canClick = true; 
+
 const onButtonClick = async (btn) => {
     try {
-        if (canClick == false) {
-            return;
-        }
-
         const button = document.getElementById(btn);
         lockButtonTemporarily(button);
-
         resetDisplay();
 
+        // Validate input for empty string
         const userName = getTextInput("userInput");
         if (userName === -1) {
             document.getElementById("statusText").innerHTML = "Please don't leave the name blank!";
-            throw new Error("Blank username");
+            throw new Error("Blank username provided.");
         }
 
         showLoading();
 
+        // Get data using API
         const userGeneralInfo = await getUserGeneralInfo(userName);
         const userPfp = await getUserPfp(userGeneralInfo[0].user_id);
         const userBestScores = await getUserBestScores(userName);
 
         hideLoading();
 
+        // Mash data into 1 array, pass that array to populate functions
         const consolidatedData = [userGeneralInfo, userPfp, userBestScores];
         populateUserCard(consolidatedData);
         populateUserPlays(consolidatedData);
@@ -121,7 +146,6 @@ const onButtonClick = async (btn) => {
     catch (error) {
         console.error(error);
     }
-
 };
 
 // Populates the usercard with the compiled json data
