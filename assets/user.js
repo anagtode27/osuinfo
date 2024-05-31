@@ -27,89 +27,101 @@ const getCountryName = (countryCode) => {
     else {
         return countryCode;
     }
-}
+};
 
-// Flag to control button locks
-let canClick = true; 
-const onButtonClick = async (btn) => {
+const lockButtonTemporarily = (button) => {
+    // Lock the button 
+    canClick = false;
+    button.disabled = true;
+    button.classList.add("lockedBtn");
+    button.classList.remove("unlockedBtn");      
 
-    const button = document.getElementById(btn);
-    try {
-        if (canClick) {
-
-            // Lock the button 
-            canClick = false;
-            button.disabled = true;
-            button.classList.add("lockedBtn");
-            button.classList.remove("unlockedBtn");      
-
-            // Sets to these conditions after time specified
-            setTimeout(() => {
-                canClick = true;
-                button.disabled = false;
-                button.classList.add("unlockedBtn");
-                button.classList.remove("lockedBtn");
-            }, 1400); // in milliseconds 
-
-            // Clean up last request
-            document.getElementById("plays").innerHTML = "";
-            document.getElementById("statusText").innerHTML = "";
-
-            // Check if cardContainer and canvas exist, remove if they do
-            const cardContainer = document.getElementById("cardContainer");
-            if (cardContainer) {
-                cardContainer.remove();
-            }
-
-            // Validate input
-            const user_name = getTextInput("userInput");
-            if (user_name === -1) {
-                document.getElementById("statusText").innerHTML = "Please don't leave the name blank!";
-                throw new Error("Blank username");
-            }
-
-            loadingText = document.getElementById("loadingDiv").style.display = "block";
-            // Async API Function
-            await getUserData(user_name); 
-        }
-    }
-    catch (error) {
-        console.error(error);
-    }
+    // Sets to these conditions after time specified
+    setTimeout(() => {
+        canClick = true;
+        button.disabled = false;
+        button.classList.add("unlockedBtn");
+        button.classList.remove("lockedBtn");
+    }, 1400); // in milliseconds 
 };
 
 
-// Gets all of the user information and compiles it into one object
-const getUserData = async (user_name) => {
-    try { 
-        // Get general info
-        let api_url = `/get_user_data/${user_name}`;
-        let fetch_response = await fetch(api_url);
-        const data_user = await fetch_response.json();
+const resetDisplay = () => {
+    document.getElementById("plays").innerHTML = "";
+    document.getElementById("statusText").innerHTML = "";
 
-        // Get pfp
-        api_url = `/get_user_pfp/${data_user[0].user_id}`;
-        fetch_response = await fetch(api_url);
-        const pfp_img_b64 = await fetch_response.text();
+    // Check if cardContainer exists, (must do this because its not just modifying the innerhtml)
+    const cardContainer = document.getElementById("cardContainer");
+    if (cardContainer) {
+        cardContainer.remove();
+    }
+};
 
-        // Get best scores
-        api_url = `/get_user_best/${user_name}`;
-        fetch_response = await fetch(api_url);
-        const compiled_data_user_best = await fetch_response.json();
-        // use map function here to get the thumbnail for each beatmap?
+const showLoading = () => {
+    loadingText = document.getElementById("loadingDiv").style.display = "block";
+};
 
-        // Data has been collected, now just populating, which is fast, so remove the loading icon 
-        loadingText = document.getElementById("loadingDiv").style.display = "none";
+const hideLoading = () => {
+    loadingText = document.getElementById("loadingDiv").style.display = "none";
+};
 
-        // Combine data into a single array, pass to populate functions
-        const consolidated_data = [data_user, pfp_img_b64, compiled_data_user_best];
-        populateUserCard(consolidated_data);
-        populateUserPlays(consolidated_data);
+
+const getUserGeneralInfo = async (userName) => {
+    // Get general info
+    let url = `/get_user_data/${userName}`;
+    let response = await fetch(url);
+    const data = await response.json();
+    return data;
+};
+
+const getUserPfp = async (userId) => {
+    let url = `/get_user_pfp/${userId}`;
+    let response = await fetch(url);
+    const data_b64 = await response.text();
+    return data_b64;
+};
+
+const getUserBestScores = async (userName) => {
+    url = `/get_user_best/${userName}`;
+    response = await fetch(url);
+    const data = await response.json();
+    return data;
+};
+
+let canClick = true; 
+const onButtonClick = async (btn) => {
+    try {
+        if (canClick == false) {
+            return;
+        }
+
+        const button = document.getElementById(btn);
+        lockButtonTemporarily(button);
+
+        resetDisplay();
+
+        const userName = getTextInput("userInput");
+        if (userName === -1) {
+            document.getElementById("statusText").innerHTML = "Please don't leave the name blank!";
+            throw new Error("Blank username");
+        }
+
+        showLoading();
+
+        const userGeneralInfo = await getUserGeneralInfo(userName);
+        const userPfp = await getUserPfp(userGeneralInfo[0].user_id);
+        const userBestScores = await getUserBestScores(userName);
+
+        hideLoading();
+
+        const consolidatedData = [userGeneralInfo, userPfp, userBestScores];
+        populateUserCard(consolidatedData);
+        populateUserPlays(consolidatedData);
     }
     catch (error) {
-        // Need to throw errors based on serverside calls... hard to implement
         console.error(error);
     }
+
 };
 
 // Populates the usercard with the compiled json data
