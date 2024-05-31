@@ -148,6 +148,7 @@ const onButtonClick = async (btn) => {
     }
 };
 
+// THIS FUNCTION NEEDS REFACTORING, BUT IDK HOW RN.
 // Populates the usercard with the compiled json data
 const populateUserCard = (data) => {
 
@@ -325,11 +326,8 @@ const populateUserCard = (data) => {
     });
 };
 
-// Populates the user's best plays with the compiled json data
-const populateUserPlays = (data) => { 
-
-    // PLEASE clean up this function with a loop. This is terrible. But at least it works
-    document.getElementById("plays").innerHTML = `
+const populateUserPlays = (data) => {
+    let playsHTML = `
     <table>
         <div class="headerContainer">
             <div class="playsHeader">${data[0][0].username}'s Best Plays:</div>
@@ -341,51 +339,27 @@ const populateUserPlays = (data) => {
             <th>Mods</th>
             <th>Max Combo</th>
             <th>Performance Points</th>
-        </tr>
-        <tr class="bestPlay">
-            <td>&#128081;</td>
-            <td>${data[2][0][0].rank}</td>
-            <td>${data[2][1][0][0].title} (${data[2][1][0][0].version})</td>
-            <td>WIP</td>
-            <td>${numberWithCommas(data[2][0][0].maxcombo)}x</td>
-            <td>${numberWithCommas(Math.round(parseInt(data[2][0][0].pp) * 100) / 100)}pp</td>
-        </tr>
-        <tr>
-            <td>#2</td>
-            <td>${data[2][0][1].rank}</td>
-            <td>${data[2][1][1][0].title} (${data[2][1][1][0].version})</td>
-            <td>WIP</td>
-            <td>${numberWithCommas(data[2][0][1].maxcombo)}x</td>
-            <td>${numberWithCommas(Math.round(parseInt(data[2][0][1].pp) * 100) / 100)}pp</td>
-        </tr>
-        <tr>
-            <td>#3</td>
-            <td>${data[2][0][2].rank}</td>
-            <td>${data[2][1][2][0].title} (${data[2][1][2][0].version})</td>
-            <td>WIP</td>
-            <td>${numberWithCommas(data[2][0][2].maxcombo)}x</td>
-            <td>${numberWithCommas(Math.round(parseInt(data[2][0][2].pp) * 100) / 100)}pp</td>
-        </tr>
-        <tr>
-            <td>#4</td>
-            <td>${data[2][0][3].rank}</td>
-            <td>${data[2][1][3][0].title} (${data[2][1][3][0].version})</td>
-            <td>WIP</td>
-            <td>${numberWithCommas(data[2][0][3].maxcombo)}x</td>
-            <td>${numberWithCommas(Math.round(parseInt(data[2][0][3].pp) * 100) / 100)}pp</td>
-        </tr>  
-        <tr>
-            <td>#5</td>
-            <td>${data[2][0][4].rank}</td>
-            <td>${data[2][1][4][0].title} (${data[2][1][4][0].version})</td>
-            <td>WIP</td>
-            <td>${numberWithCommas(data[2][0][4].maxcombo)}x</td>
-            <td>${numberWithCommas(Math.round(parseInt(data[2][0][4].pp) * 100) / 100)}pp</td>
-        </tr>    
-    </table> 
-    `;
+        </tr>`;
 
-}
+    for (let i = 0; i < 5; i++) {
+        const rank = i === 0 ? '👑' : `#${i + 1}`;
+        const play = data[2][0][i];
+        const song = data[2][1][i][0];
+        playsHTML += `
+        <tr>
+            <td>${rank}</td>
+            <td>${play.rank}</td>
+            <td>${song.title} (${song.version})</td>
+            <td>WIP</td>
+            <td>${numberWithCommas(play.maxcombo)}x</td>
+            <td>${numberWithCommas(Math.round(parseInt(play.pp) * 100) / 100)}pp</td>
+        </tr>`;
+    }
+
+    playsHTML += `</table>`;
+    document.getElementById("plays").innerHTML = playsHTML;
+};
+
 
 // Dictionary of countries 
 let isoCountries = {
