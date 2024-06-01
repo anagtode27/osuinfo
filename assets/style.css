@@ -159,18 +159,19 @@ body {
     transform: scale(1.05); 
 }
 
-.cardContainer a {
-    color: black; 
+a {
+    color: #3399ff; 
     transition: color 0.2s ease; 
-}
-  
-.cardContainer a:visited { 
     text-decoration: none;
-    color: black;
 }
   
-.cardContainer a:hover {
-    color: #007bff; 
+a:visited { 
+    text-decoration: none;
+    color: #3399ff;
+}
+  
+a:hover {
+    color: #0033cc; 
     cursor: pointer;
 }
 
@@ -227,7 +228,7 @@ tr.header th {
 }
 
 
-/* CSS for loader taken from w3schools */
+/* CSS for loader taken (modified) from w3schools */
 .loadingDiv {
     margin-top: 50px;
     display: none;

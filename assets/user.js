@@ -63,7 +63,6 @@ const hideLoading = () => {
     loadingText = document.getElementById("loadingDiv").style.display = "none";
 };
 
-
 const getUserGeneralInfo = async (userName) => {
     // Attempt to fetch general info
     try {
@@ -112,7 +111,6 @@ const getUserBestScores = async (userName) => {
     }
 };
 
-
 const onButtonClick = async (btn) => {
     try {
         const button = document.getElementById(btn);
@@ -139,6 +137,7 @@ const onButtonClick = async (btn) => {
 
         // Mash data into 1 array, pass that array to populate functions
         const consolidatedData = [userGeneralInfo, userPfp, userBestScores];
+        console.log(consolidatedData);
         populateUserCard(consolidatedData);
         populateUserPlays(consolidatedData);
     }
@@ -275,7 +274,7 @@ const populateUserCard = (data) => {
     container3.appendChild(countryRanking);
 
     const timePlayed = document.createElement('p');
-    timePlayed.textContent = `${Math.round(parseFloat(data[0][0].total_seconds_played) / 3600)} Hours`;
+    timePlayed.textContent = `${numberWithCommas(Math.round(parseFloat(data[0][0].total_seconds_played) / 3600))} Hours`;
     container3.appendChild(timePlayed);
 
     const level = document.createElement('p');
@@ -350,7 +349,7 @@ const populateUserPlays = (data) => {
         <tr>
             <td>${rank}</td>
             <td>${play.rank}</td>
-            <td>${song.title} (${song.version})</td>
+            <td> <a href="https://osu.ppy.sh/beatmapsets/${song.beatmapset_id}#osu/${song.beatmap_id}" target="_blank"> ${song.title} (${song.version}) </a></td>
             <td>WIP</td>
             <td>${numberWithCommas(play.maxcombo)}x</td>
             <td>${numberWithCommas(Math.round(parseInt(play.pp) * 100) / 100)}pp</td>
