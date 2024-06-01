@@ -9,6 +9,7 @@ body {
     font-family: "Fira Sans", sans-serif;
     background-color: #e2d6d6;
     color: black;
+    zoom: 120%; 
 }
 
 .query-header {

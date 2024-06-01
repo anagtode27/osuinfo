@@ -149,7 +149,7 @@ const onButtonClick = async (btn) => {
 // THIS FUNCTION NEEDS REFACTORING, BUT IDK HOW RN.
 // Because of the canvas, I think I need to have the items literally on the dom
 // So I don't think I can use InnerHTML. But I should look into this more.
-// This function populates the usercard with the compiled json data
+// This function builds and populates the usercard with the compiled json data
 const populateUserCard = (data) => {
 
     /* ########################################################
@@ -326,6 +326,7 @@ const populateUserCard = (data) => {
     });
 };
 
+// Creates and populates a table with the compiled json data
 const populateUserPlays = (data) => {
     let playsHTML = `
     <table>
@@ -349,7 +350,7 @@ const populateUserPlays = (data) => {
         <tr>
             <td>${rank}</td>
             <td>${play.rank}</td>
-            <td> <a href="https://osu.ppy.sh/beatmapsets/${song.beatmapset_id}#osu/${song.beatmap_id}" target="_blank"> ${song.title} (${song.version}) </a></td>
+            <td> <a href="https://osu.ppy.sh/beatmapsets/${song.beatmapset_id}#osu/${song.beatmap_id}" target="_blank"> ${song.title} <br> (${song.version}) </a></td>
             <td>WIP</td>
             <td>${numberWithCommas(play.maxcombo)}x</td>
             <td>${numberWithCommas(Math.round(parseInt(play.pp) * 100) / 100)}pp</td>
@@ -359,7 +360,6 @@ const populateUserPlays = (data) => {
     playsHTML += `</table>`;
     document.getElementById("plays").innerHTML = playsHTML;
 };
-
 
 // Dictionary of countries 
 let isoCountries = {
