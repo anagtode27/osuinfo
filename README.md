@@ -1,8 +1,12 @@
 # osu!Info
 
-## Website that displays information about the rhythm game, osu!, using their osu!api-v1.
+Website that displays information about the rhythm game osu!, using their osu!api-v1.
 
 ### Installation:
+
+Prerequisites: 
+
+- Node.js (and npm)
 
 1) From any directory, clone the repository and move into it.
 
@@ -16,13 +20,14 @@
 ```console
 ~/osuinfo$ npm install
 ```
-3) Run ```node server.js``` to start the server, and you should get the following output (To close the server, press Ctrl+C in the same terminal).
+3) Run ```node server.js``` to start the server. You should get the following output.
 
 ```console
 ~/osuinfo$ node server.js
 The server is now listening on port 3000
 ```
-4) Open your a web browser and go to ```localhost:3000```.
+4) Open a web browser and go to ```localhost:3000```. When finished, press Ctrl+C in the terminal to close the server.
+----
 
 
 
