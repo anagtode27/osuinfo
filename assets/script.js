@@ -38,6 +38,11 @@ const getCountryName = (countryCode) => {
     }
 };
 
+// Translates country code using massive dictionary at the bottom 
+const getMapStatus = (int) => {
+    return mapStatus[int];
+};
+
 // Controls the state of button 
 const lockButton = (button) => {
     canClick = false;
@@ -54,18 +59,21 @@ const unlockButton = (button) => {
 
 // Clears relevant texts on the field
 const resetDisplay = () => {
-    
-    const plays = document.getElementById("plays");
-    if (plays != null) {
-        plays.innerHTML = "";
-    }
+    // Shared by all 3
     document.getElementById("statusText").innerHTML = "";
 
-    // Check if cardContainer exists (must do this because its removing from the DOM)
-    const cardContainer = document.getElementById("cardContainer");
+    // Specific to user
+    document.getElementById("plays").innerHTML = ""
+    const cardContainer = document.getElementById("cardContainer"); // (must do this check because its removing from the DOM)
     if (cardContainer) {
         cardContainer.remove();
     }
+
+    // Specific to beatmap
+    document.getElementById("cover").src = "";
+    document.getElementById("infoCard").innerHTML = "";
+    const dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(dropdown => dropdown.remove());
 };
 
 // Controls the visibility of the loading spinner
@@ -378,6 +386,7 @@ const populateUserPlays = (data) => {
 // Driver function for user data
 const onBeatmapButtonClick = async (btn) => {
     try {
+        console.log("clicked");
         const button = document.getElementById(btn);
         lockButton(button);
         resetDisplay();
@@ -463,18 +472,16 @@ const getBeatmapThumbImg = async (beatmapSETId) => {
 
 const populateInfoCard = async (data) => {
     document.getElementById("cover").src = 'data:image/jpeg;base64,' + data[1];
-    
     let infoHTML = `
     <div class="infoCard">
         <div class="row1">
-            <p>Song Title</p>
-            <p>Artist</p>
-            <p>Map Status</p>
+            <p>${data[0][0].title}</p>
+            <p>By ${data[0][0].artist}</p>
+            <p>${getMapStatus(data[0][0].approved)}</p>
             </div>
         <div class="row2">
-            <p>Source</p>
-            <p>Mapper</p>
-            <p>Approval Date</p>
+            <p>Source: ${data[0][0].source}</p>
+            <p>Mapped by ${data[0][0].creator}</p>
         </div>
     </div>`;
     
@@ -483,6 +490,37 @@ const populateInfoCard = async (data) => {
     document.getElementById("infoCard").style.background = 'data:image/jpeg;base64,' + data[1];
 };
 
+
+const populateDiffSection = async (data) => {
+    const container = document.getElementById("container");
+
+    for (let i = 0; i < data[0].length; i++) {
+        const dropdown = document.createElement('div');
+        dropdown.className = 'dropdown';
+
+        const exposedInfo = document.createElement('div');
+        exposedInfo.className = 'exposedInfo';
+        exposedInfo.innerHTML = 
+        `<p> Version </p> 
+         <p> Star Rating </p>`;
+        dropdown.appendChild(exposedInfo);
+
+        const hiddenInfo = document.createElement('div');
+        hiddenInfo.className = 'hiddenInfo';
+        hiddenInfo.innerHTML = 
+        `<p> OD </p>
+         <p> Pass Ratio </p>
+         <p> BPM </p>
+         <p> Max Combo </p>
+         <p> AR </p>
+         <p> Drain Time </p>`;
+        dropdown.appendChild(hiddenInfo);
+
+        container.appendChild(dropdown);
+    }
+};
+
+/*
 const populateDiffSection = async (data) => {
 
     for(i = 0; i<data[0].length; i++) {
@@ -507,7 +545,18 @@ const populateDiffSection = async (data) => {
         container.innerHTML += templateHTML;
     }
 };
+*/
 
+// Dictionary of map status
+let mapStatus = {
+    '4' : 'Loved',
+    '3' : 'Qualified',
+    '2' : 'Approved',
+    '1' : 'Ranked',
+    '0' : 'Pending',
+    '-1' : 'WIP',
+    '-2' : 'Graveyard',
+};
 
 // Dictionary of countries 
 let isoCountries = {

@@ -260,7 +260,7 @@ tr.header th {
 .infoCard {
 	display: flex;
 	flex-direction: column;
-	width: 500px;
+	width: 600px;
 	gap: 10px;
 	font-size: 20px;
     margin-bottom: 5px;
@@ -300,7 +300,8 @@ tr.header th {
 	display: block;
     position: absolute;
 }
-  
+
+
 
 
 
