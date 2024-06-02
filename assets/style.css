@@ -254,6 +254,7 @@ tr.header th {
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 	transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
     margin-bottom: 10px;
+    margin-top: 7px;
 }
 .coverImg:hover {
     box-shadow: 0 8px 16px rgba(0,0,0,0.2); 
@@ -263,7 +264,7 @@ tr.header th {
 .infoCard {
 	display: flex;
 	flex-direction: column;
-	width: 400px;
+	width: 500px;
 	gap: 10px;
 	font-size: 20px;
     margin-bottom: 5px;
@@ -281,8 +282,8 @@ tr.header th {
 }
 
 .dropdown {
-    width: 28.7%;
-    margin-bottom: 5px;
+    width: 45%;
+    margin-bottom: 7px;
 }
 
 .exposedInfo {
@@ -315,7 +316,11 @@ tr.header th {
 }
 
 .needSpace {
-    margin-top: 300px;
+    margin-top: 107px;
+}
+
+.difficultiesText {
+    margin-top: 3px;
 }
 
 

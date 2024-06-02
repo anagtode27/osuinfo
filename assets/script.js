@@ -79,10 +79,9 @@ const resetDisplay = () => {
         cover.src = "";
     }
     const infoCard = document.getElementById("infoCard");
-    infoCard.style.border = "none";
-    infoCard.style.boxShadow = "";
-
     if (infoCard != null) {
+        infoCard.style.border = "none";
+        infoCard.style.boxShadow = "";
         infoCard.innerHTML = "";
     }
     const difficultiesText = document.getElementById("difficultiesText");
@@ -494,9 +493,10 @@ const getBeatmapThumbImg = async (beatmapSETId) => {
 
 const populateInfoCard = async (data) => {
     document.getElementById("cover").src = 'data:image/jpeg;base64,' + data[1];
+    const nameInfo = data[0][0].title.split(" (");
     let infoHTML = `
         <div class="row1">
-            <p>${data[0][0].title}</p>
+            <p>${nameInfo[0]}</p>
             <p>${data[0][0].artist}</p>
             </div>
         <div class="row2">
