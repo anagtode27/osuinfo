@@ -79,8 +79,19 @@ const resetDisplay = () => {
         cover.src = "";
     }
     const infoCard = document.getElementById("infoCard");
+    infoCard.style.border = "none";
+    infoCard.style.boxShadow = "";
+
     if (infoCard != null) {
         infoCard.innerHTML = "";
+    }
+    const difficultiesText = document.getElementById("difficultiesText");
+    if (difficultiesText != null) {
+        difficultiesText.innerHTML = "";
+    }
+    const needSpace = document.getElementById("needSpace");
+    if (needSpace) {
+        needSpace.remove();
     }
     // No check here because it's a class selector 
     const dropdowns = document.querySelectorAll('.dropdown');
@@ -484,30 +495,28 @@ const getBeatmapThumbImg = async (beatmapSETId) => {
 const populateInfoCard = async (data) => {
     document.getElementById("cover").src = 'data:image/jpeg;base64,' + data[1];
     let infoHTML = `
-    <div class="infoCard">
         <div class="row1">
             <p>${data[0][0].title}</p>
-            <p>By ${data[0][0].artist}</p>
-            <p>${getMapStatus(data[0][0].approved)}</p>
+            <p>${data[0][0].artist}</p>
             </div>
         <div class="row2">
-            <p>Source: ${data[0][0].source}</p>
+            <p>${getMapStatus(data[0][0].approved)}</p>
             <p>Mapped by ${data[0][0].creator}</p>
-        </div>
-    </div>`;
+        </div>`;
     
     document.getElementById("infoCard").innerHTML = infoHTML;
     document.getElementById("infoCard").style.border = "1px solid black";
+    document.getElementById("infoCard").style.boxShadow = "0 4px 8px rgba(0,0,0,0.1)";
     document.getElementById("infoCard").style.background = 'data:image/jpeg;base64,' + data[1];
 };
 
 
 const populateDiffSection = async (data) => {
+    document.getElementById("difficultiesText").innerHTML = "Available Difficulties:";
     // Sort function taken from copilot (learn how this exactly works later)
     data[0].sort((a, b) => a.difficultyrating - b.difficultyrating);
 
     const container = document.getElementById("container");
-
     for (let i = 0; i < data[0].length; i++) {
         const dropdown = document.createElement('div');
         dropdown.className = 'dropdown';
@@ -526,11 +535,15 @@ const populateDiffSection = async (data) => {
          <p> OD: ${data[0][i].diff_overall} </p>
          <p> Passrate: ${Math.round(data[0][i].passcount / data[0][i].playcount * 100 * 100) / 100}% </p>
          <p> BPM: ${data[0][i].bpm} </p>
-         <p> Max Combo: ${numberWithCommas(data[0][i].max_combo)} </p>
+         <p> Max Combo: ${numberWithCommas(data[0][i].max_combo)}x </p>
          <p> Drain Time: ${data[0][i].hit_length} seconds </p>`;
         dropdown.appendChild(hiddenInfo);
         container.appendChild(dropdown);
     }
+    const needSpace = document.createElement('div');
+    needSpace.classList.add("needSpace");
+    needSpace.id = "needSpace";
+    container.appendChild(needSpace);
 };
 
 /*

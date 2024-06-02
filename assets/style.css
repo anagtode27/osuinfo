@@ -248,31 +248,41 @@ tr.header th {
 }
 
 /* Start beatmap.html specific styles */
-#cover {
+.coverImg {
     width: 700px;
     height: auto;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+	transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    margin-bottom: 10px;
 }
-
-.dropdown{
-    margin-bottom: 5px;
+.coverImg:hover {
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2); 
+    transform: scale(1.05); 
 }
 
 .infoCard {
 	display: flex;
 	flex-direction: column;
-	width: 600px;
+	width: 400px;
 	gap: 10px;
 	font-size: 20px;
     margin-bottom: 5px;
+	transition: box-shadow 0.3s ease, transform 0.3s ease;
+    padding: 5px;
+}
+.infoCard:hover {
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2); 
+    transform: scale(1.05); 
 }
 .infoCard div {
 	display: flex;
 	justify-content: space-between;
-    padding: 6px;
+    padding: 4px;
 }
 
 .dropdown {
-    width: 50%;
+    width: 28.7%;
+    margin-bottom: 5px;
 }
 
 .exposedInfo {
@@ -283,8 +293,7 @@ tr.header th {
 	font-size: 18px;
     height: 40px;
     align-items: center;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 20px 10px;
 }
 
 .hiddenInfo {
@@ -296,9 +305,17 @@ tr.header th {
     background-color: black;
 }
 
+.hiddenInfo div {
+    padding: 3px;
+}
+
 .dropdown:hover .hiddenInfo{
 	display: block;
     position: absolute;
+}
+
+.needSpace {
+    margin-top: 300px;
 }
 
 
