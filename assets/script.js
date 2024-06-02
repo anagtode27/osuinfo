@@ -1,10 +1,19 @@
 // When document is fully loaded, attach eventlistener
 document.addEventListener('DOMContentLoaded', () => {
-    button = document.getElementById("btn");
-    button.addEventListener("click", () => onButtonClick("btn"));  
+    userButton = document.getElementById("userBtn");
+    beatmapButton = document.getElementById("beatmapBtn");
+    if (userButton != null) {
+        userButton.addEventListener("click", () => onUserButtonClick("userBtn"));  
+    }
+    else if (beatmapButton != null) {
+        beatmapButton.addEventListener("click", () => onBeatmapButtonClick("beatmapBtn"));  
+    }
+    else {
+        console.log("hi"); // placeholder
+    }
 });
 
-// Handles checking if input is empty string or not
+// Handles getting and checking if input is empty string or not
 const getTextInput = (elementId) => {
     if (document.getElementById(elementId).value === "") {
         return -1;
@@ -43,9 +52,13 @@ const unlockButton = (button) => {
     button.classList.remove("lockedBtn");
 }
 
+// Clears relevant texts on the field
 const resetDisplay = () => {
-    // Clear relevant texts
-    document.getElementById("plays").innerHTML = "";
+    
+    const plays = document.getElementById("plays");
+    if (plays != null) {
+        plays.innerHTML = "";
+    }
     document.getElementById("statusText").innerHTML = "";
 
     // Check if cardContainer exists (must do this because its removing from the DOM)
@@ -63,8 +76,8 @@ const hideLoading = () => {
     loadingText = document.getElementById("loadingDiv").style.display = "none";
 };
 
+// Attempt to fetch general info
 const getUserGeneralInfo = async (userName) => {
-    // Attempt to fetch general info
     try {
         let url = `/get_user_data/${userName}`;
         let response = await fetch(url);
@@ -79,8 +92,8 @@ const getUserGeneralInfo = async (userName) => {
     }
 };
 
+// Attempt to fetch pfp data
 const getUserPfp = async (userId) => {
-    // Attempt to fetch pfp data
     try {
         let url = `/get_user_pfp/${userId}`;
         let response = await fetch(url);
@@ -95,8 +108,8 @@ const getUserPfp = async (userId) => {
     }
 };
 
+// Attempt to fetch best score data
 const getUserBestScores = async (userName) => {
-    // Attempt to fetch best score data
     try {
         url = `/get_user_best/${userName}`;
         let response = await fetch(url);
@@ -111,7 +124,8 @@ const getUserBestScores = async (userName) => {
     }
 };
 
-const onButtonClick = async (btn) => {
+// Driver function for user data
+const onUserButtonClick = async (btn) => {
     try {
         const button = document.getElementById(btn);
         lockButton(button);
@@ -285,7 +299,7 @@ const populateUserCard = (data) => {
     cardContainer.appendChild(container3);
 
     // Append cardContainer to the card element that exists in the DOM already
-    const card = document.getElementById("card");
+    const card = document.getElementById("userCard");
     card.appendChild(cardContainer);
 
     // Following lines configure the chart, using Chart.js
@@ -360,6 +374,114 @@ const populateUserPlays = (data) => {
     playsHTML += `</table>`;
     document.getElementById("plays").innerHTML = playsHTML;
 };
+
+// Driver function for user data
+const onBeatmapButtonClick = async (btn) => {
+    try {
+        const button = document.getElementById(btn);
+        lockButton(button);
+        resetDisplay();
+
+        // Validate input for empty string
+        const id = getTextInput("userInput");
+        if (id === -1) {
+            document.getElementById("statusText").innerHTML = "Please don't leave the ID blank!";
+            unlockButton(button);
+            throw new Error("Blank beatmap ID provided.");
+        }
+
+        showLoading();
+
+        // Get data using API
+        const beatmapGeneralInfo = await getBeatmapGeneralInfo(id);
+        const beatmapCoverImg = await getBeatmapCoverImg(id);
+        const beatmapThumbImg = await getBeatmapThumbImg(id);
+
+        hideLoading();
+        unlockButton(button);
+
+        // Mash data into 1 array, pass that array to populate functions
+        const consolidatedData = [beatmapGeneralInfo, beatmapCoverImg, beatmapThumbImg];
+        console.log(beatmapGeneralInfo);
+        //console.log(consolidatedData);
+        populateInfoCard(consolidatedData);
+        
+    }
+    catch (error) {
+        console.error(error);
+    }
+};
+
+// Attempt to general beatmap info
+const getBeatmapGeneralInfo = async (beatmapId) => {
+    try {
+        let url = `/get_beatmaps/${beatmapId}`;
+        let response = await fetch(url);
+        const data = await response.json();
+        if (!response.ok) {
+            throw new Error("Issue getting general beatmap information.");
+        }
+        return data;
+    }
+    catch (error) {
+        console.error(error);
+    }
+};
+
+// Attempt to get beatmap cover image
+const getBeatmapCoverImg = async (beatmapSETId) => {
+    try {
+        let url = `/get_cover_img/${beatmapSETId}`;
+        let response = await fetch(url);
+        const data_b64 = await response.text();
+        if (!response.ok) {
+            throw new Error("Issue getting user beatmap cover image.");
+        }
+        return data_b64;
+    }
+    catch (error) {
+        console.error(error);
+    }
+};
+
+// Attempt to get beatmap thumbnail image
+const getBeatmapThumbImg = async (beatmapSETId) => {
+    try {
+        let url = `/get_thumbnail_img/${beatmapSETId}`;
+        let response = await fetch(url);
+        const data_b64 = await response.text();
+        if (!response.ok) {
+            throw new Error("Issue getting user beatmap cover image.");
+        }
+        return data_b64;
+    }
+    catch (error) {
+        console.error(error);
+    }
+};
+
+const populateInfoCard = async (data) => {
+    document.getElementById("cover").src = 'data:image/jpeg;base64,' + data[1];
+    
+    let infoHTML = `
+    <div class="infoCard">
+        <div class="row1">
+            <p>Song Title</p>
+            <p>Artist</p>
+            <p>Map Status</p>
+            </div>
+        <div class="row2">
+            <p>Source</p>
+            <p>Mapper</p>
+            <p>Approval Date</p>
+        </div>
+    </div>`;
+    
+    document.getElementById("infoCard").innerHTML = infoHTML;
+    document.getElementById("infoCard").style.border = "1px solid black";
+    document.getElementById("infoCard").style.background = 'data:image/jpeg;base64,' + data[1];
+};
+
 
 // Dictionary of countries 
 let isoCountries = {

@@ -1,3 +1,4 @@
+/* Start shared section between all html */
 * {
     margin: 0;
     padding: 0;
@@ -46,17 +47,20 @@ body {
     display: flex;
     justify-content: center;
 }
+
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 5px; 
 }
+
 .playerForm {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
 .userInput {
     font-family: inherit;
     padding-top: 10px;
@@ -112,6 +116,41 @@ body {
     margin-top: 10px;
 }
 
+a {
+    color: #3399ff; 
+    transition: color 0.2s ease; 
+    text-decoration: none;
+}
+  
+a:visited { 
+    text-decoration: none;
+    color: #3399ff;
+}
+  
+a:hover {
+    color: #0033cc; 
+    cursor: pointer;
+}
+
+/* CSS for loader taken (modified) from w3schools */
+.loadingDiv {
+    margin-top: 50px;
+    display: none;
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #ba34db; /* Blue */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+  }
+  
+    @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+    }
+
+
+/* Start index.html specific styles*/
 .cardContainer {
     padding: 5px;
 	display: flex;
@@ -158,22 +197,6 @@ body {
     background-color: #f3e6f1; 
     box-shadow: 0 8px 16px rgba(0,0,0,0.2); 
     transform: scale(1.05); 
-}
-
-a {
-    color: #3399ff; 
-    transition: color 0.2s ease; 
-    text-decoration: none;
-}
-  
-a:visited { 
-    text-decoration: none;
-    color: #3399ff;
-}
-  
-a:hover {
-    color: #0033cc; 
-    cursor: pointer;
 }
 
 .plays {
@@ -224,27 +247,59 @@ tr.header th {
     margin-bottom: 2px;
 }
 
-.beatmap-form {
-    width: 200px;
+/* Start beatmap.html specific styles */
+#cover {
+    width: 700px;
+    height: auto;
 }
 
+.dropdown{
+    margin-bottom: 5px;
+}
 
-/* CSS for loader taken (modified) from w3schools */
-.loadingDiv {
-    margin-top: 50px;
-    display: none;
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #ba34db; /* Blue */
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    animation: spin 2s linear infinite;
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+.infoCard {
+	display: flex;
+	flex-direction: column;
+	width: 500px;
+	gap: 10px;
+	font-size: 20px;
+    margin-bottom: 5px;
+}
+.infoCard div {
+	display: flex;
+	justify-content: space-between;
+    padding: 6px;
+}
+
+.dropdown {
+    width: 50%;
+}
+
+.exposedInfo {
+	display: flex;
+    justify-content: space-between;
+	gap: 20px;
+	border: 1px solid black;
+	font-size: 18px;
+    height: 40px;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.hiddenInfo {
+	border: 1px solid black;
+	display: none;
+	gap: 10px;
+	width: 200px;
+    color: white;
+    background-color: black;
+}
+
+.dropdown:hover .hiddenInfo{
+	display: block;
+    position: absolute;
+}
   
 
 

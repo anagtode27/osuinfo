@@ -4,25 +4,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="#">
-    <title>Document</title>
+    <title>osu!Info</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet"/>
 </head>
 <body>
-    <h1>Beatmap Info (WIP)</h1>
 
-    <form>
-        <input type="text" placeholder = "beatmapID ONLY!!!! ie: 131891" class="beatmap-form" id="beatmap-form">
-    </form> 
+  <header>
+    <div class="query-header">
+        <h1>osu!Info</h1>
+    </div>
 
-    <button type="button" id="btn">Click Me</button>
+    <div class="query-nav">
+        <p>I'm looking to...</p>
+        <ul class="query-type">
+            <li><a href="multiplayer.html">Track Multiplayer Lobby</a></li>
+            <li><a href="index.html">Get User Details</a></li>
+        </ul>
+    </div>
+    
+  </header>
 
-    <img src=""id="cover_img">
+  <main class="bigcontainer">
+    <div class="container">
 
-    <img src=""id="thumb_img">
+        <form class="playerForm">
+            <label>
+                <input type="text" placeholder=" &#x1F50E; Enter beatmap ID only" class="userInput" id ="userInput"/>
+            </label>
+            <p class="statusText" id="statusText"></p>
+            <button type="button" class="unlockedBtn" id="beatmapBtn">Get info!</button>
+        </form>
 
-    <a href="index.html">back</a>
+        <div class="loadingDiv" id="loadingDiv"></div>
+        <img src="" id="cover">
 
+        <div class="infoCard" id="infoCard"></div>
 
-<script src="beatmap.js"></script>
+        <div class="dropdown">
+            <div class="exposedInfo">
+                <p> Version </p>
+                <p> Star Rating </p>
+            </div>
+            <div class="hiddenInfo">
+                <p> OD </p>
+                <p> Pass Ratio </p>
+                <p> BPM </p>
+                <p> Max Combo </p>
+                <p> AR </p>
+                <p> Drain Time </p>
+            </div>
+        </div>
+
+        <!---->
+
+        <div class="dropdown">
+            <div class="exposedInfo">
+                <p> Versionsdasdaddas </p>
+                <p> Star Rating </p>
+            </div>
+                <div class="hiddenInfo">
+                    <p> OD </p>
+                    <p> Pass Ratio </p>
+                    <p> BPM </p>
+                    <p> Max Combo </p>
+                    <p> AR </p>
+                    <p> Drain Time </p>
+            </div>
+        </div>
+
+    </div>
+  </main>
+
+<script src="script.js"></script>
 </body>
 </html>

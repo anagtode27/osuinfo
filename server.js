@@ -44,7 +44,7 @@ app.get('/get_user_recent/:user', async (req, res) => {
 
 // Beatmap info endpoint
 app.get('/get_beatmaps/:id', async (req, res) => {
-    const api_url = `https://osu.ppy.sh/api/get_beatmaps?k=${process.env.API_KEY}&b=${req.params.id}`;
+    const api_url = `https://osu.ppy.sh/api/get_beatmaps?k=${process.env.API_KEY}&s=${req.params.id}`;
     const fetch_response = await fetch(api_url);
     const data = await fetch_response.json();
     res.json(data);
