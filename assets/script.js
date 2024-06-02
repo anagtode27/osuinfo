@@ -63,15 +63,26 @@ const resetDisplay = () => {
     document.getElementById("statusText").innerHTML = "";
 
     // Specific to user
-    document.getElementById("plays").innerHTML = ""
+    // Make this check to see what page ur on
+    const plays = document.getElementById("plays");
+    if (plays != null) {
+        plays.innerHTML = "";
+    }
     const cardContainer = document.getElementById("cardContainer"); // (must do this check because its removing from the DOM)
     if (cardContainer) {
         cardContainer.remove();
     }
 
     // Specific to beatmap
-    document.getElementById("cover").src = "";
-    document.getElementById("infoCard").innerHTML = "";
+    const cover = document.getElementById("cover");
+    if (cover != null) {
+        cover.src = "";
+    }
+    const infoCard = document.getElementById("infoCard");
+    if (infoCard != null) {
+        infoCard.innerHTML = "";
+    }
+    // No check here because it's a class selector 
     const dropdowns = document.querySelectorAll('.dropdown');
     dropdowns.forEach(dropdown => dropdown.remove());
 };
@@ -492,6 +503,9 @@ const populateInfoCard = async (data) => {
 
 
 const populateDiffSection = async (data) => {
+    // Sort function taken from copilot (learn how this exactly works later)
+    data[0].sort((a, b) => a.difficultyrating - b.difficultyrating);
+
     const container = document.getElementById("container");
 
     for (let i = 0; i < data[0].length; i++) {
@@ -501,21 +515,20 @@ const populateDiffSection = async (data) => {
         const exposedInfo = document.createElement('div');
         exposedInfo.className = 'exposedInfo';
         exposedInfo.innerHTML = 
-        `<p> Version </p> 
-         <p> Star Rating </p>`;
+        `<p> ${data[0][i].version} </p> 
+         <p> ${(Math.round(data[0][i].difficultyrating * 100)/100).toFixed(2)}</p>`;
         dropdown.appendChild(exposedInfo);
 
         const hiddenInfo = document.createElement('div');
         hiddenInfo.className = 'hiddenInfo';
         hiddenInfo.innerHTML = 
-        `<p> OD </p>
-         <p> Pass Ratio </p>
-         <p> BPM </p>
-         <p> Max Combo </p>
-         <p> AR </p>
-         <p> Drain Time </p>`;
+        `<p> AR: ${data[0][i].diff_approach} </p>
+         <p> OD: ${data[0][i].diff_overall} </p>
+         <p> Passrate: ${Math.round(data[0][i].passcount / data[0][i].playcount * 100 * 100) / 100}% </p>
+         <p> BPM: ${data[0][i].bpm} </p>
+         <p> Max Combo: ${numberWithCommas(data[0][i].max_combo)} </p>
+         <p> Drain Time: ${data[0][i].hit_length} seconds </p>`;
         dropdown.appendChild(hiddenInfo);
-
         container.appendChild(dropdown);
     }
 };
