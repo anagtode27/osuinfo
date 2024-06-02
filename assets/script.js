@@ -405,6 +405,7 @@ const onBeatmapButtonClick = async (btn) => {
         console.log(beatmapGeneralInfo);
         //console.log(consolidatedData);
         populateInfoCard(consolidatedData);
+        populateDiffSection(consolidatedData);
         
     }
     catch (error) {
@@ -480,6 +481,31 @@ const populateInfoCard = async (data) => {
     document.getElementById("infoCard").innerHTML = infoHTML;
     document.getElementById("infoCard").style.border = "1px solid black";
     document.getElementById("infoCard").style.background = 'data:image/jpeg;base64,' + data[1];
+};
+
+const populateDiffSection = async (data) => {
+
+    for(i = 0; i<data[0].length; i++) {
+        container = document.getElementById("container");
+        
+        let templateHTML = `
+        <div class="dropdown">
+            <div class="exposedInfo">
+                <p> Version </p>
+                <p> Star Rating </p>
+            </div>
+                <div class="hiddenInfo">
+                    <p> OD </p>
+                    <p> Pass Ratio </p>
+                    <p> BPM </p>
+                    <p> Max Combo </p>
+                    <p> AR </p>
+                    <p> Drain Time </p>
+            </div>
+        </div>`;
+        
+        container.innerHTML += templateHTML;
+    }
 };
 
 
