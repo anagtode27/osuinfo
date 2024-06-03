@@ -7,12 +7,18 @@ Website that displays information about the rhythm game osu!, using their osu!ap
 Prerequisites: 
 
 - Node.js (and npm)
+- An osu! account with a registered api key (directions are on https://osu.ppy.sh/wiki/en/osu%21api)
 
 1) From any directory, clone the repository and move into it.
 
 ```console
-~$ git clone git@github.com:anagtode27/osuinfo.git
+~$ git clone https://github.com/anagtode27/osuinfo.git
 ~$ cd osuinfo
+```
+3) Run ```echo "API_KEY=YOUR_API_KEY_HERE" > .env``` to set up the required .env file. Replace ```YOUR_API_KEY_HERE``` with your own key.
+
+```console
+~/osuinfo$ echo "API_KEY=YOUR_API_KEY_HERE" > .env
 ```
 
 2) Run ```npm install``` to install all node dependencies for the application.
