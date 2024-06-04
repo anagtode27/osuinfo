@@ -8,15 +8,15 @@
 
 body {
     font-family: "Fira Sans", sans-serif;
-    background-color: #e2d6d6;
+    background-color: pink;
     color: black;
     zoom: 120%; 
 }
 
 .query-header {
+    margin-top: 30px;
     background-color: pink;
     padding-top: 5px;
-    border-bottom: solid black;
     text-align: center;
 }
 
@@ -136,8 +136,8 @@ a:hover {
 .loadingDiv {
     margin-top: 50px;
     display: none;
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #ba34db; /* Blue */
+    border: 16px solid #f3f3f3; 
+    border-top: 16px solid #ba34db; 
     border-radius: 50%;
     width: 60px;
     height: 60px;
@@ -160,6 +160,8 @@ a:hover {
 	gap: 10px;
 	box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 	transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    background-color: pink;
+    border: 1px solid black;
 }
 
 .container1 {
@@ -194,9 +196,9 @@ a:hover {
 }
 
 .cardContainer:hover {
-    background-color: #f3e6f1; 
+    background-color: white; 
     box-shadow: 0 8px 16px rgba(0,0,0,0.2); 
-    transform: scale(1.05); 
+    transform: scale(1.07); 
 }
 
 .plays {
@@ -211,7 +213,13 @@ table {
     border: 1px solid black;
     border-collapse: collapse;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
+
+table:hover {
+    transform: scale(1.07); 
+}
+
 
 .headerContainer {
     display: flex;
@@ -227,10 +235,24 @@ td {
     border-bottom: 1px solid black;
     padding: 8px;
     height: 20px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+td:hover.maplink {
+    transform: scale(1.1); 
+}
+
+td:hover {
+    transform: scale(1.5); 
 }
 
 tr {
 	text-align: center
+}
+
+tr:hover {
+    background-color: white;
+    transition: background-color 0.3s ease; 
 }
 
 tr.header th {

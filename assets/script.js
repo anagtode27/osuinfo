@@ -385,7 +385,7 @@ const populateUserPlays = (data) => {
             <th>Performance Points</th>
         </tr>`;
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 3; i++) {
         const rank = i === 0 ? '👑' : `#${i + 1}`;
         const play = data[2][0][i];
         const song = data[2][1][i][0];
@@ -393,7 +393,7 @@ const populateUserPlays = (data) => {
         <tr>
             <td>${rank}</td>
             <td>${play.rank}</td>
-            <td> <a href="https://osu.ppy.sh/beatmapsets/${song.beatmapset_id}#osu/${song.beatmap_id}" target="_blank"> ${song.title} <br> (${song.version}) </a></td>
+            <td class="maplink"> <a href="https://osu.ppy.sh/beatmapsets/${song.beatmapset_id}#osu/${song.beatmap_id}" target="_blank"> ${song.title} <br> (${song.version}) </a></td>
             <td>WIP</td>
             <td>${numberWithCommas(play.maxcombo)}x</td>
             <td>${numberWithCommas(Math.round(parseInt(play.pp) * 100) / 100)}pp</td>
