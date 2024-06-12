@@ -63,13 +63,17 @@ const resetDisplay = () => {
     document.getElementById("statusText").innerHTML = "";
 
     // Specific to user
-    // Make this check to see what page ur on
+    // The null checks must happen, otherwise they will give errors on pages where they don't exist
     const plays = document.getElementById("plays");
     if (plays != null) {
         plays.innerHTML = "";
     }
-    const cardContainer = document.getElementById("cardContainer"); // (must do this check because its removing from the DOM)
-    if (cardContainer) {
+    const userCardHeader = document.getElementById("userCardHeader");
+    if (userCardHeader != null) {
+        userCardHeader.innerHTML = "";
+    }
+    const cardContainer = document.getElementById("cardContainer");
+    if (cardContainer != null) {
         cardContainer.remove();
     }
 
@@ -230,6 +234,8 @@ const populateUserCard = (data) => {
     // Splits date into <date>, <time> array and using date section in html
     const joinDateInfo = data[0][0].join_date.split(" ");
 
+    document.getElementById("userCardHeader").innerHTML = `${data[0][0].username}'s User Card:`
+
     // Create the main container
     const cardContainer = document.createElement('div');
     cardContainer.className = 'cardContainer';
@@ -374,7 +380,7 @@ const populateUserPlays = (data) => {
     let playsHTML = `
     <table>
         <div class="headerContainer">
-            <div class="playsHeader">${data[0][0].username}'s Best Plays:</div>
+            <div class="sectionHeader">${data[0][0].username}'s Best Plays:</div>
         </div>
         <tr class="header">
             <th>Rank</th>
@@ -402,6 +408,12 @@ const populateUserPlays = (data) => {
 
     playsHTML += `</table>`;
     document.getElementById("plays").innerHTML = playsHTML;
+
+    // Add empty space below the plays
+    const needSpace = document.createElement('div');
+    needSpace.classList.add("needSpace");
+    needSpace.id = "needSpace";
+    document.getElementById("plays").appendChild(needSpace);
 };
 
 // Driver function for user data
